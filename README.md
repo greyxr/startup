@@ -11,6 +11,13 @@ The game will feel like a cross between the 1977 text adventure [Zork](https://c
 - Ability to play the game within your browser without waiting on the server
 - Ability to save your high scores to a leaderboard
 
+## Sketches
+### A sketch showing the game screen with a logged in user:
+![Game screen](./images/xormbalfu1.png)
+### A sketch showing the login screen:
+![Game screen](./images/xormbalfu3.png)
+### A sketch showing the leaderboard screen with a guest user:
+![Game screen](./images/xormbalfu4.png)
 ## Technologies
 #### Authentication:
 Authentication will come from a login screen on the home screen of the app. The user will be able to log in securely through HTTPS and retrieve their game state and score.
