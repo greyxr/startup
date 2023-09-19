@@ -28,6 +28,8 @@ Xormbalfu will utilize an AWS RDS database that contains the game state for each
 #### Websocket Data
 The app will receive realtime information from other players when a new top score is set.
 
+## Additional Technologies
+
 #### HTML
 The app will have three pages -- a page for the game, a page for high scores, and a page for logging in.
 
