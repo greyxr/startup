@@ -8,7 +8,8 @@ The game will feel like a cross between the 1977 text adventure [Zork](https://c
 ## Key Features
 - Secure login
 - The ability to persistently save a game and game state
-- Ability to play the game within your browser without waiting on the server
+- Ability to play the game within your browser
+- Ability to request game information as the user plays
 - Ability to save your high scores to a leaderboard
 
 ## Sketches
