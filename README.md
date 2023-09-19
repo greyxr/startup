@@ -1,6 +1,6 @@
 # Startup Specification
 
-## Xormbalfu -- a simple text adventure
+## Xormbalfu (name in progress I swear) -- a simple text adventure
 Xormbalfu is a simple text adventure game focused on exploration and collecting treasure. Instead of a parser, input from the user will come from interaction with a series of buttons on the screen, which will expand in scope as the player finds items and equipment. The player explores the ancient alien city of Xormbalfu, trying to retrieve treasure and discover the secrets of the dead city before being eaten by one of the current inhabitants.
 
 The game will feel like a cross between the 1977 text adventure [Zork](https://classicreload.com/zork-i.html) and the 2013 text based RPG [A Dark Room](https://adarkroom.doublespeakgames.com/).
