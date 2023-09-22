@@ -1,9 +1,12 @@
 # Startup Specification
 
-## Xormbalfu (name in progress I swear) -- a simple text adventure
+## Xormbalfu -- a simple text adventure
+Website: [startup.xormbalfu.click](startup.xormbalfu.click)
+
 Xormbalfu is a simple text adventure game focused on exploration and collecting treasure. I'm going to try to make a text parser, but if that doesn't work, input from the user will come from interaction with a series of buttons on the screen, which will expand in scope as the player finds items and equipment. The player explores the ancient alien city of Xormbalfu, trying to retrieve treasure and discover the secrets of the dead city before being eaten by one of the current inhabitants.
 
 The game will feel like a cross between the 1977 text adventure [Zork](https://classicreload.com/zork-i.html) and the 2013 text based RPG [A Dark Room](https://adarkroom.doublespeakgames.com/).
+<p align="center"><img src="./images/xorm1.png"></p>
 
 ## Key Features
 - Secure login
