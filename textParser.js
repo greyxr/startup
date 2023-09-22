@@ -40,4 +40,4 @@ function checkWord(currentWord) {
     return null
 }
 
-parseCommand('pick up the shiny sword')
+parseCommand('go north')
