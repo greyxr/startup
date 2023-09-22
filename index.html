@@ -1,56 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <!-- Tell browsers not to scale the viewport automatically -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Xormbalfu Home Page</title>
-  </head>
-  <body>
-    <header>
-      <!-- Icon is a placeholder -->
-      <h1>xormbalfu -- a browser based text adventure <img src="./images/xorm1.png"></h1>
-      <hr />
-    </header>
+</head>
+<body>
+<header>
+    <!-- Icon is a placeholder -->
+    <h1>xormbalfu -- a browser based text adventure <img src="./images/xorm1.png"></h1>
+    <hr/>
+</header>
 
-    <main>
-      <!-- The 'Welcome' will be left here to make it easier to navigate during the html phase. Once CSS and javascript get added in, I'll take this out because I'm trying to go for a retro feel -->
-      <h1>Welcome</h1>
-    </main>
-    <nav><a href='/'>Play</a> <a href='/login.html'>Login</a> <a href='/scores.html'>Scores</a></nav>
-    <hr />
-    <section>
-      <div>
-        You stand amidst the weathered remnants of an ancient tower, weather-worn stones and scattered debris telling a tale of ages past. Above, the sky is heavy with brooding clouds, pregnant with the promise of rain that threatens to break at any moment.
+<main>
+    <!-- The 'Welcome' will be left here to make it easier to navigate during the html phase. Once CSS and javascript get added in, I'll take this out because I'm trying to go for a retro feel -->
+    <h1>Welcome</h1>
+</main> <!-- Hyperlinks to the different pages -->
+<nav><a href='/'>Play</a> <a href='/login.html'>Login</a> <a href='/scores.html'>Scores</a></nav>
+<hr/>
+<section>
+    <div>
+        You stand amidst the weathered remnants of an ancient tower, weather-worn stones and scattered debris telling a
+        tale of ages past. Above, the sky is heavy with brooding clouds, pregnant with the promise of rain that
+        threatens to break at any moment.
 
-In front of you, a wooden door stands sentinel, offering passage northward into a room long surrendered to decay. Once a grand chamber, now reduced to crumbling walls and remnants of a forgotten era. Fallen beams and scattered bricks bear witness to the relentless march of time.
+        In front of you, a wooden door stands sentinel, offering passage northward into a room long surrendered to
+        decay. Once a grand chamber, now reduced to crumbling walls and remnants of a forgotten era. Fallen beams and
+        scattered bricks bear witness to the relentless march of time.
 
-To the west, the path you've been treading continues, winding through the remnants of the tower's structure. Cracked archways and remnants of chambers hint at the tower's former grandeur, now surrendered to moss and creeping ivy.
+        To the west, the path you've been treading continues, winding through the remnants of the tower's structure.
+        Cracked archways and remnants of chambers hint at the tower's former grandeur, now surrendered to moss and
+        creeping ivy.
 
-Amidst the ruins lie scattered artifacts—a cracked amphora, remnants of a rusted sword, and a partially buried chest, its lid slightly ajar. The chest beckons, promising secrets or perhaps a long-forgotten treasure.
-      </div>
-      <br>
-      <div>
+        Amidst the ruins lie scattered artifacts—a cracked amphora, remnants of a rusted sword, and a partially buried
+        chest, its lid slightly ajar. The chest beckons, promising secrets or perhaps a long-forgotten treasure.
+    </div>
+    <br>
+    <div>
         <span><input placeholder="go north"><button type="submit">Enter Command</button></span>
-      </div>
-      <br>
-      <div>
+    </div>
+    <br>
+    <div>
+        <!-- I don't know how effective it will be to add a text parser, but I'm going to try. If I can get it to work, I might still leave these buttons in as -->
+        <!-- shortcuts to the command, but I might also just take them out and rely wholly on the input box. My original plan was to not implement -->
+        <!-- a text parser, but I think it would be really cool to figure it out. -->
         <p>Inventory:</p>
         <menu>
-          <li>an apple <button type="button">Drop</button></li>
-          <li>a rusty dagger <button type="button">Wield</button> <button type="button">Drop</button> <button type="button">Attack</button></li>
-          <li>an old note <button type="button">Read</button> <button type="button">Drop</button></li>
-          <li>a crushed locket <button type="button">Use</button> <button type="button">Drop</button></li>
-          <li>a dark lantern <button type="button">Light</button> <button type="button">Drop</button></li>
+            <li>an apple
+                <button type="button">Drop</button>
+            </li>
+            <li>a rusty dagger
+                <button type="button">Wield</button>
+                <button type="button">Drop</button>
+                <button type="button">Attack</button>
+            </li>
+            <li>an old note
+                <button type="button">Read</button>
+                <button type="button">Drop</button>
+            </li>
+            <li>a crushed locket
+                <button type="button">Use</button>
+                <button type="button">Drop</button>
+            </li>
+            <li>a dark lantern
+                <button type="button">Light</button>
+                <button type="button">Drop</button>
+            </li>
         </menu>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
-      <hr />
-      <span class="text-reset">David Kartchner</span>
-      <br />
-      <a href="https://github.com/greyxr/startup">GitHub</a>
-    </footer>
-  </body>
+<footer>
+    <hr/>
+    <span class="text-reset">David Kartchner</span>
+    <br/>
+    <a href="https://github.com/greyxr/startup">GitHub</a>
+</footer>
+</body>
 </html>
