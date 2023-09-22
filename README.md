@@ -42,3 +42,13 @@ The app will have styling that adapts to different screen sizes, as well as mobi
 
 #### Javascript
 Xormbalfu will run off of Javascript in the browser.
+
+## HTML Deliverable
+- <b>HTML Page</b> - As part of the HTML deliverable, I created the three pages used in the webapp -- the login page, the high score page, and the home page where you play the game.
+- <b>Links</b> - I put in a navigation bar at the top that links between the three pages.
+- <b>Application textual content</b> - The home page contains a textual representation of what the game will look like -- text on a screen. It's a text adventure. Yeah. Once I add CSS, it will be in a box by itself with a scroll window, so you can scroll up and see your history in the game, but for now, this is what it would look like with HTML. It also has the input box for commands, and what the inventory will look like. Each item in the inventory will probably have buttons like this with the actions you can use on them.
+- <b>Images</b> - I made and added the pixelart logo at the top of the screen. I also made a favicon to use in the tabs, but it won't work.
+- <b>Login</b> - The login page has boxes for username and password, and a button to submit.
+- <b>Database</b> - Each time a command is input from the user, the webapp will pull new descriptions from the database. The high score table will also pull its information from the database.
+- <b>Websocket</b> - The count at the bottom of the screen will keep track of the number of logged in users there are at a time (and guest users if I can figure it out).
+- <b>Third party service calls</b> - I'm a little lost as to what to do here, but for the present I added a line on the scores page that will pull a random quote from the Kanye Rest API and display it there.
