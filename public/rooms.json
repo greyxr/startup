@@ -1,0 +1,117 @@
+{
+  "rooms": [
+    {
+      "id": 1,
+      "description": "You are in a dusty old library with shelves full of books. To the north, you see a doorway.",
+      "verboseDescription": "The room is dimly lit, and the air smells musty. Dust motes dance in the light streaming through the windows. There is a doorway to the north.",
+      "objects": [
+        {
+          "name": "book",
+          "description": "An old, weathered book on the top shelf.",
+          "roomDescription": "An old, weathered book sits on the shelf.",
+          "generalRoomDescription": "There is a book on the shelf."
+        },
+        {
+          "name": "table",
+          "description": "A wooden table covered in dust.",
+          "roomDescription": "A wooden table covered in dust is in the center of the room.",
+          "generalRoomDescription": "There is a wooden table covered in dust."
+        }
+      ],
+      "directions": {
+        "north": 2
+      }
+    },
+    {
+      "id": 2,
+      "description": "You find yourself in a kitchen with a large stove and a dining table. To the south, you see a doorway. To the east, you see a garden.",
+      "verboseDescription": "The room is clean and organized. The smell of freshly baked bread fills the air. There is a doorway to the south and a garden to the east.",
+      "objects": [
+        {
+          "name": "stove",
+          "description": "A modern stainless steel stove.",
+          "roomDescription": "A modern stainless steel stove stands against the wall.",
+          "generalRoomDescription": "There is a modern stainless steel stove."
+        },
+        {
+          "name": "table",
+          "description": "A wooden dining table set for a meal.",
+          "roomDescription": "A wooden dining table is set for a meal.",
+          "generalRoomDescription": "There is a wooden dining table."
+        }
+      ],
+      "directions": {
+        "south": 1,
+        "east": 3
+      }
+    },
+    {
+      "id": 3,
+      "description": "You are in a garden surrounded by blooming flowers and lush greenery. To the west, you see a doorway. To the north, you see a basement entrance.",
+      "verboseDescription": "The garden is peaceful and full of life. Birds are chirping and flitting around. There is a doorway to the west and a basement entrance to the north.",
+      "objects": [
+        {
+          "name": "flowers",
+          "description": "Vibrant and colorful flowers of various kinds.",
+          "roomDescription": "Vibrant and colorful flowers of various kinds bloom throughout the garden.",
+          "generalRoomDescription": "There are vibrant and colorful flowers of various kinds."
+        },
+        {
+          "name": "bench",
+          "description": "A sturdy wooden bench.",
+          "roomDescription": "A sturdy wooden bench offers a place to sit and enjoy the garden.",
+          "generalRoomDescription": "There is a sturdy wooden bench."
+        }
+      ],
+      "directions": {
+        "west": 2,
+        "north": 4
+      }
+    },
+    {
+      "id": 4,
+      "description": "You find yourself in a spooky basement with cobwebs and dim lighting. To the south, you see a garden. To the east, you see a treasure room.",
+      "verboseDescription": "The air is damp and cold. Strange sounds echo through the darkness. There is a garden to the south and a treasure room to the east.",
+      "objects": [
+        {
+          "name": "spiderweb",
+          "description": "A thick, sticky spiderweb stretching across the corner.",
+          "roomDescription": "A thick, sticky spiderweb stretches across the corner of the room.",
+          "generalRoomDescription": "There is a thick, sticky spiderweb."
+        },
+        {
+          "name": "box",
+          "description": "A small, mysterious box covered in dust.",
+          "roomDescription": "A small, mysterious box covered in dust sits on a shelf.",
+          "generalRoomDescription": "There is a small, mysterious box covered in dust."
+        }
+      ],
+      "directions": {
+        "south": 3,
+        "east": 5
+      }
+    },
+    {
+      "id": 5,
+      "description": "You are in a treasure room with glittering gold and jewels. To the west, you see a basement entrance.",
+      "verboseDescription": "The room is filled with dazzling treasures. You've hit the jackpot! There is a basement entrance to the west.",
+      "objects": [
+        {
+          "name": "gold",
+          "description": "Shiny gold coins and bars.",
+          "roomDescription": "Shiny gold coins and bars are neatly stacked on a table.",
+          "generalRoomDescription": "There are shiny gold coins and bars."
+        },
+        {
+          "name": "jewels",
+          "description": "Sparkling jewels of various colors and sizes.",
+          "roomDescription": "Sparkling jewels of various colors and sizes are displayed in a glass case.",
+          "generalRoomDescription": "There are sparkling jewels of various colors and sizes."
+        }
+      ],
+      "directions": {
+        "west": 4
+      }
+    }
+  ]
+}
