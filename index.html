@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="module" src="./runGame.js"></script><script type="module" src="./textParser.js"></script>
+    </script>
     <meta charset="UTF-8"/>
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -43,7 +45,7 @@
         <br>
         <div>
             <!-- This will send parse requests and update the user's game state in the database -->
-            <span><input placeholder="go north"><button onclick="domManip()">Enter Command</button></span>
+            <span><input id="inputBox" placeholder="go north"><button onclick="domManip()">Enter Command</button></span>
         </div>
         <br>
         <div>
@@ -88,6 +90,3 @@
 </footer>
 </body>
 </html>
-
-<script src="runGame.js">
-</script>

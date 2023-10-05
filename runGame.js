@@ -1,3 +1,5 @@
+import { parseCommand } from './textParser.js'
+
 async function handleInput() {
     // let roomObj = {
     //     "rooms": [
@@ -126,13 +128,13 @@ async function handleInput() {
     //       }
     //     ]
     //   }
-    let roomRes = (await fetch("./public/rooms.json"))
+    let roomRes = (await fetch("./rooms.json"))
     let roomObj = await roomRes.json()
-    let playerRes = (await fetch("./public/player.json"))
+    let playerRes = (await fetch("./player.json"))
     let playerObj = await playerRes.json()
     let currentRoom = roomObj.rooms.find((room) => room.id == playerObj.currentRoom)
 
-    printRoom(currentRoom, playerObj)
+    //printRoom(currentRoom, playerObj)
 }
 
 function printRoom(room, playerObj) {
@@ -151,6 +153,18 @@ function testJS() {
     console.log("Hello!")
 }
 
+
 async function domManip() {
+    // Assign variables
+    inputBox = document.getElementById('inputBox')
+    output = document.getElementById('output')
+
+    // Check for empty command
+    if(inputBox.value == '') {
+        return
+    }
+    parseCommand
     await handleInput()
+    output.innerHTML += '> ' + inputBox.value + '<br>'
+    inputBox.value = ''
 }

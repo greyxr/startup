@@ -60,6 +60,8 @@ function parseCommand(input) {
         subject: subject
     }
 }
+const _parseCommand = parseCommand
+export { _parseCommand as parseCommand }
 
 function getAction(currentWord) {
     // Check for valid actions
@@ -103,12 +105,10 @@ function throwError(message) {
     }
 }
 
-function handleDirections()
+function handleDirections() {}
 
-function handleActions()
+function handleActions() {}
 
-function handleMisc()
+function handleMisc() {}
 
-function handleCombat()
-
-parseCommand('go north')
+function handleCombat() {}
