@@ -1,4 +1,6 @@
-import { parseCommand } from './textParser.js'
+// global variables
+let roomObj = ''
+let playerObj = ''
 
 async function handleInput() {
     // let roomObj = {
@@ -128,43 +130,246 @@ async function handleInput() {
     //       }
     //     ]
     //   }
-    let roomRes = (await fetch("./rooms.json"))
-    let roomObj = await roomRes.json()
-    let playerRes = (await fetch("./player.json"))
-    let playerObj = await playerRes.json()
-    let currentRoom = roomObj.rooms.find((room) => room.id == playerObj.currentRoom)
 
-    //printRoom(currentRoom, playerObj)
+
+    // Assign variables
+    inputBox = document.getElementById('input')
+    output = document.getElementById('output')
+    
+    // Check for empty command
+    if(inputBox.value == '') {
+        return
+    }
+
+    output.innerHTML += '> ' + inputBox.value + '<br>'
+    let currentRoom = getRoom(roomObj, playerObj)
+
+    // handle input
+    let command = parseCommand(inputBox.value)
+    if (command.error != null) {
+        printToOutput(command.message)
+        inputBox.value = ''
+        return
+    }
+
+    let newOutput = ''
+    // get output
+    switch(command.action) {
+        case 'travel':
+            if (travel(currentRoom, playerObj, command.subject) == null) {
+                printToOutput('You can\'t go that way.')
+            } else {
+                printRoom()
+            }
+    }
+
+    // print output
+
+    console.log("Player:")
+    console.log(playerObj)
+    console.log("Current Room:")
+    console.log(getRoom(roomObj, playerObj))
+
+    inputBox.value = ''
 }
 
-function printRoom(room, playerObj) {
+function getRoom(roomObj, playerObj) {
+    return roomObj.rooms.find((room) => room.id == playerObj.currentRoom)
+}
+
+function printToOutput(outputText) {
     let output = document.getElementById('output')
-    if (playerObj.verbose) {
-        output.innerText += room.verboseDescription + '\n'
+    output.innerText += outputText + '\n'
+    output.scrollTop = output.scrollHeight
+}
+
+function travel(room, playerObj, direction) {
+    if (room.directions[direction] == null) {
+        console.log("Invalid direction!")
+        console.log(room.directions)
+        return null
     } else {
-        output.innerText += room.description + '\n'
+        console.log("Valid direction!")
+        playerObj.currentRoom = room.directions[direction]
+        return 'Traveled'
     }
-    for (object of room.objects) {
+}
+
+function printRoom() {
+    let output = document.getElementById('output')
+    let currentRoom = roomObj.rooms.find((room) => room.id == playerObj.currentRoom)
+    console.log(playerObj)
+    console.log(currentRoom)
+    if (playerObj.verbose) {
+        output.innerText += currentRoom.verboseDescription + '\n'
+    } else {
+        output.innerText += currentRoom.description + '\n'
+    }
+    for (object of currentRoom.objects) {
         output.innerText += object.roomDescription + '\n'
     }
+
+    output.scrollTop = output.scrollHeight
 }
 
 function testJS() {
     console.log("Hello!")
 }
 
-
-async function domManip() {
-    // Assign variables
-    inputBox = document.getElementById('inputBox')
+async function setUpGame() {
     output = document.getElementById('output')
+    input = document.getElementById('input')
 
-    // Check for empty command
-    if(inputBox.value == '') {
-        return
-    }
-    parseCommand
-    await handleInput()
-    output.innerHTML += '> ' + inputBox.value + '<br>'
-    inputBox.value = ''
+    output.style.display = "block"
+    input.style.display = "block"
+
+    let roomRes = await fetch("./rooms.json")
+    roomObj = await roomRes.json()
+    let playerRes = await fetch("./player.json")
+    playerObj = await playerRes.json()
+
+    await initialPrint()
 }
+
+async function initialPrint() {
+    console.log("Initial printing")
+    printRoom()
+}
+
+function handleSeed() {
+    let seed = document.getElementById('seed')
+    console.log('Seed: ' + seed.value)
+    seed.style.display = "none"
+    document.getElementById('seedP').style.display = "none"
+    setUpGame()
+}
+
+function parseCommand(input) {
+    // parseCommand will take a string that should contain
+    // an action and an object. If valid, it returns
+    // the input turned into an object with the
+    // command.
+
+    // Each subject, in each room and in general, should have appropriate
+    // responses for each valid action that can be applied to it.
+    // That way, validation becomes a matter of checking the action
+    // against the available actions from the object and returning the
+    // appropriate response. Putting in a custom action becomes a
+    // matter of adding it to the lexicon in checkSubject, but only
+    // adding it to the specific subject you want it to apply to.
+    // Some universally applicable actions (like 'examine') won't
+    // be checked. It should be noted that even if an action is invalid,
+    // the action should be attached if you want to return input to the player.
+    // The only reason an action should not be attached is if you want
+    // the command to return as invalid.
+
+    // Alternate idea: not attach actions that wouldn't do anything, and just
+    // attach a list of valid actions. If an action is not in the list,
+    // have an error message for each invalid subject.
+
+    exampleSubjectList = [{
+        name: 'the rusty sword',
+        description: 'it is a rusty sword',
+        push: 'Push a sword?',
+        eat: 'You don\'t want to do that...'
+    }]
+
+    console.log("In parseCommand: " + input)
+    // Sanitize and check input to make sure it is not empty and has more than one word
+    if (input == null) {
+        return throwError("No command recognized.")
+    }
+    let inputList = String(input).trim().split(' ')
+    if (inputList[1] == null) {
+        let singleCommand = checkSingleCommand(inputList[1])
+        if (singleCommand != null) {
+            return singleCommand
+        } else {
+            return throwError("Command requires at least two words")
+        }
+    }
+
+    console.log("Input list: " + inputList)
+
+    // Check for a valid action
+    console.log("Checking action " + inputList[0])
+    let action = getAction(inputList[0])
+    if (action == null) {
+        return throwError("Action error")
+    }
+
+    console.log("Action: " + action)
+
+    let actionLength = inputList[0].length
+    let subject = validateSubject(input.slice(actionLength).trim())
+    if (subject == null) {
+        return throwError("Subject error")
+    }
+
+    // If subject and action pass validation, return as JSON object
+    return {
+        action: action,
+        subject: subject
+    }
+}
+
+function checkSingleCommand() {
+
+}
+
+function getAction(currentWord) {
+    // Check for valid actions
+
+    let travel = ['travel', 'go', 'walk', 'run', 'head', 'travel']
+    let actions = ['actions', 'pick', 'take', 'drop', 'release', 'throw', 'wield', 'look']
+    let commands = [travel, actions]
+    for (const list of commands) {
+        if (list.includes(currentWord) && (currentWord !== list[0])) {
+            return list[0]
+        }
+    }
+    return null
+}
+
+function validateSubject(subject) {
+    // Check room specific subjects
+
+    // Check general subjects
+    let commands = [
+        ['north', 'n'],
+        ['west', 'w'],
+        ['east', 'e'],
+        ['south', 's'],
+        ['northwest', 'nw'],
+        ['southwest', 'sw'],
+        ['northeast', 'ne'],
+        ['southeast', 'se']
+    ]
+    for (const list of commands) {
+        if (list.includes(subject)) {
+            return list[0]
+        }
+    }
+    return null
+}
+
+function handleInvalidSubject(action) {
+    // handleInvalidSubject should return the
+    // appropriate response for each invalid
+    // subject.
+}
+
+function throwError(message) {
+    return {
+        error: true,
+        message: message
+    }
+}
+
+function handleDirections() {}
+
+function handleActions() {}
+
+function handleMisc() {}
+
+function handleCombat() {}

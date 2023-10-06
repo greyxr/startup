@@ -60,8 +60,6 @@ function parseCommand(input) {
         subject: subject
     }
 }
-const _parseCommand = parseCommand
-export { _parseCommand as parseCommand }
 
 function getAction(currentWord) {
     // Check for valid actions
