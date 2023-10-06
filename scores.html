@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Xormbalfu Scores Page</title>
@@ -12,7 +14,7 @@
     <h1>xormbalfu -- a browser based text adventure <img src="./images/xorm1.png"></h1>
     <hr/>
     <h1>Scoreboard</h1>
-    <nav><a href='/'>Play</a> <a href='/login.html'>Login</a> <a href='/scores.html'>Scores</a></nav>
+    <nav><a href='./index.html'>Play</a> <a href='./login.html'>Login</a> <a href='./scores.html'>Scores</a></nav>
     <hr/>
 </header>
 <main>
@@ -56,12 +58,36 @@
 
 <footer>
     <hr/>
-    <p>Currently logged in as: guest</p>
-    <!-- This will come from the websocket. -->
-    <p>6 logged in users, 4 guests</p>
-    <span class="text-reset">David Kartchner</span>
-    <br/>
-    <a href="https://github.com/greyxr/startup">GitHub</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="./images/xorm1.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="./index.html">Play</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./login.html">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="./scores.html">Scores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
+              </li>
+              <li class="nav-item">
+                <!-- kind of an ugly solution, but it gets the visual effect -->
+                <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">6 users online, currently logged in as guest</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 </footer>
 </body>
 </html>

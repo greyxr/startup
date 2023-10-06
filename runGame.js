@@ -161,6 +161,12 @@ async function handleInput() {
             } else {
                 printRoom()
             }
+        case 'look':
+            if (command.subject === 'room') {
+                printRoom()
+            } else {
+                printToOutPut('Functionality not implemented yet.')
+            }
     }
 
     // print output
@@ -281,7 +287,7 @@ function parseCommand(input) {
     }
     let inputList = String(input).trim().split(' ')
     if (inputList[1] == null) {
-        let singleCommand = checkSingleCommand(inputList[1])
+        let singleCommand = checkSingleCommand(inputList[0])
         if (singleCommand != null) {
             return singleCommand
         } else {
@@ -313,8 +319,27 @@ function parseCommand(input) {
     }
 }
 
-function checkSingleCommand() {
-
+function checkSingleCommand(command) {
+    let commands = [
+        ['north', 'n'],
+        ['west', 'w'],
+        ['east', 'e'],
+        ['south', 's'],
+        ['northwest', 'nw'],
+        ['southwest', 'sw'],
+        ['northeast', 'ne'],
+        ['southeast', 'se'],
+    ]
+    for (const list of commands) {
+        if (list.includes(command)) {
+            return {action: "travel", subject: list[0]}
+        }
+    }
+    if ((['examine', 'x', 'look', 'l']).includes(command)) {
+        return {action: "look", subject: "room"}
+    }
+    return null
+    
 }
 
 function getAction(currentWord) {
