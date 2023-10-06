@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./base.css">
     <script type="module" src="./runGame.js"></script><script type="module" src="./textParser.js"></script>
     </script>
     <meta charset="UTF-8"/>
@@ -12,13 +14,36 @@
 <body>
 <header>
     <!-- Icon is a placeholder -->
-    <h1>xormbalfu -- a browser based text adventure <img src="./images/xorm1.png"></h1>
+    <h1>xormbalfu -- a browser based text adventure</h1>
     <hr/>
-    <!-- The 'Welcome' will be left here to make it easier to navigate during the html phase. Once CSS and javascript get added in, I'll take this out because I'm trying to go for a retro feel -->
-    <h1>Welcome</h1>
     <!-- Hyperlinks to the different pages -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="./images/xorm1.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./">Play</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./login.html">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./scores.html">Scores</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     <nav><a href='/'>Play</a> <a href='/login.html'>Login</a> <a href='/scores.html'>Scores</a></nav>
-    <hr/>
+    <br>
+    <div style="display: flex">
+    <p>Play</p><p>Login</p></div>
 </header>
 <main>
     <section>
