@@ -65,3 +65,18 @@ html {
     width: 300px;
     align-self: start;
 }
+
+#loginSection {
+    display: flex;
+    flex-direction: column;
+    outline-style: solid;
+    width: 50%;
+    height: 50%;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.bg-dark::placeholder {
+    color: rgb(136, 136, 136);
+}

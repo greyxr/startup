@@ -1,18 +1,20 @@
+1.
 
-     S ::= ABe
-    A ::= dB
-    A ::= aS
-    A ::= c
-    B ::= AS
-    B ::= b
+FIRST(rule) = [ID]
+FIRST(query) = [ID]
+FIRST(schemeList) = [ID, lambda]
+FIRST(factList) = [ID, lambda]
+FIRST(ruleList) = [ID, lambda]
+FIRST(queryList) = [ID, lambda]
 
+2.
 
-Terminals: S A B
-Non terminals: a, b, c, d, e
+FOLLOW(schemeList) = [FACTS]
+FOLLOW(factList) = [RULES]
+FOLLOW(ruleList) = [QUERIES]
+FOLLOW(queryList) = [EOF]
+FOLLOW(predicateList) = [PERIOD]
+FOLLOW(parameterList) = [RIGHT_PAREN]
+FOLLOW(stringList) = [RIGHT_PAREN]
+FOLLOW(idList) = [RIGHT_PAREN]
 
-S(First) = [a, d ,c]
-A(First) = [a, d ,c]
-B(First) = [a, d ,c, b]
-
-S(Follow) = [e]
-A(Follow) = []
