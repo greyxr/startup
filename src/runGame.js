@@ -1,3 +1,5 @@
+const config = require('./config.js')
+
 // global variables
 let roomObj = ''
 let playerObj = ''
@@ -179,6 +181,11 @@ async function handleInput() {
     inputBox.value = ''
 }
 
+module.exports = {
+    handleSeed,
+    handleInput
+}
+
 function getRoom(roomObj, playerObj) {
     return roomObj.rooms.find((room) => room.id == playerObj.currentRoom)
 }
@@ -242,42 +249,12 @@ async function initialPrint() {
     printRoom()
 }
 
-async function handleSeed() {
+function handleSeed() {
     let seed = document.getElementById('seed')
     console.log('Seed: ' + seed.value)
     seed.style.display = "none"
     document.getElementById('seedP').style.display = "none"
-    await seedGame()
     setUpGame()
-}
-
-async function seedGame(input) {
-    console.log("In seedGame")
-    let apiKeyRes = await (await fetch("./config.json")).json()
-    let apiKey = apiKeyRes.apiKey
-    let apiUrl = 'https://api.openai.com/v1/chat/completions'
-    const requestData = {
-        "model": "gpt-3.5-turbo",
-        "messages": [{"role": "user", "content": "Say this is a test!"}],
-        "temperature": 0.7
-      };
-      
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-      };
-      
-      fetch(apiUrl, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          // Handle the API response data
-          console.log('API Response:', data);
-        })
-        .catch(error => console.error('API Request Error:', error));
 }
 
 function parseCommand(input) {
@@ -428,3 +405,30 @@ function handleActions() {}
 function handleMisc() {}
 
 function handleCombat() {}
+
+async function callApi() {
+    const apiKey = 'YOUR_API_KEY'; // Replace with your API key
+const apiUrl = 'https://api.openai.com/v1/engines/davinci/completions'; // Example API endpoint
+
+const requestData = {
+  prompt: 'Once upon a time,',
+  max_tokens: 50
+};
+
+const requestOptions = {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(requestData)
+};
+
+fetch(apiUrl, requestOptions)
+  .then(response => response.json())
+  .then(data => {
+    // Handle the API response data
+    console.log('API Response:', data);
+  })
+  .catch(error => console.error('API Request Error:', error));
+}
