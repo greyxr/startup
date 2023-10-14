@@ -208,7 +208,7 @@ async function callGPT(input, context, tries = '3') {
         "temperature": 0.50
       };
       console.log("Request body:")
-      console.log(requestData)
+      // console.log(requestData)
       
       const requestOptions = {
         method: 'POST',
@@ -224,7 +224,7 @@ async function callGPT(input, context, tries = '3') {
         let data = await response.json()
         toggleLoading()
         // Handle the API response data
-        console.log('API Response:', data);
+        // console.log('API Response:', data);
         //   roomObj = JSON.parse(data.choices[0].message.content)
         //   console.log(roomObj)
         let message = (data.choices[0].message.content)
