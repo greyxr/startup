@@ -26,35 +26,35 @@
 <footer>
     <hr/>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="./images/xorm1.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="./index.html">Play</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./login.html">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="./about.html">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
-              </li>
-              <li class="nav-item">
-                <!-- kind of an ugly solution, but it gets the visual effect -->
-                <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">6 users online, currently logged in as guest</a>
-              </li>
-            </ul>
-          </div>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="./images/xorm1.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="./index.html">Play</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./login.html">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
+            </li>
+            <li class="nav-item">
+              <!-- kind of an ugly solution, but it gets the visual effect -->
+              <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">6 users online, currently logged in as guest</a>
+            </li>
+          </ul>
         </div>
-      </nav>
+      </div>
+    </nav>
 </footer>
 </body>
 </html>
@@ -68,7 +68,7 @@ onload = (event) => animateText();
 
 
 function animateText() {
-const sentence = "Xormbalfu is an experiment with using Chat-GPT to generate random text adventures. On the start screen, you will be prompted for a few words or a phrase. Chat-GPT will then generate a number of rooms using your input as a seed and return a JSON object, which Xormbalfu will render as a playable text adventure. After starting a game, you may return to this page to view the generated JSON object and the prompt that generated it.";
+const sentence = "Xormbalfu is an experiment with using Chat-GPT to generate random text adventures. On the start screen, you will be prompted for a few words or a phrase. Chat-GPT will then use that to seed a playable text adventure. It takes in previous commands and responses so it has can keep a static adventure going, although only for 3000 words or so. It might take up to 15 seconds for a response.";
 const words = sentence.split(' ');
 
 const outputDiv = document.getElementById('outputDiv');

@@ -20,12 +20,11 @@ main {
     flex-direction: column;
     align-items: center;
     height: auto;
-    /* justify-content: center; */
 }
 
 #invDiv {
+    display: none;
     height: auto;
-    outline: solid;
     width: 80%;
     margin-top: 8%;
 }
@@ -36,8 +35,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height:100%;
-    overflow: auto;
+    max-height:100vh;
 }
 
 .emptySection {
@@ -65,7 +63,7 @@ html {
 #seed {
     margin: 10px;
     display: none;
-    width: 300px;
+    width: auto;
 }
 
 #seedP {
@@ -76,7 +74,8 @@ html {
 
 #output {
     height: 80%;
-    margin: 20px;
+    max-height: 600px;
+    margin: 5%;
     color: white;
     display: none;
     overflow: auto;
@@ -84,6 +83,7 @@ html {
 
 #input {
     margin: 20px;
+    margin-top:10%;
     display: none;
     width: 300px;
     align-self: start;
@@ -93,29 +93,24 @@ html {
     color: rgb(136, 136, 136);
 }
 
-/* .item-container {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    outline: solid;
-    width: 80%;
-    margin-top: 8%;
-  } */
 .inv-item {
+    display: none;
     margin: 20px;
     display: flex;
     flex-direction: row;
     align-content:center;
-    outline: solid;
+    /* outline: solid; */
 }
 
 .action-div {
+    align-self:center;
+    /* outline:solid; */
     display: flex;
     align-content: center;
 }
   .item-name {
     margin: 10px;
+    /* outline:solid; */
   }
   .action-button {
     margin-right: 10px;
@@ -125,13 +120,61 @@ html {
 
 #loading {
     display: none;
+    position: absolute;
+    bottom: 21.5%;
 }
 
 @media (max-width: 767px) {
     .hide-on-small-screen {
       display: none;
     }
+}
+
+@media (max-width: 1290px) {
     .switch-to-row {
         flex-direction: column-reverse;
     }
+    #input {
+        width: auto;
+    }
+    #seed {
+        width: auto;
+    }
   }
+
+
+  /* Loading effect */
+
+  .loader {
+    overflow: hidden;
+    background-color:#212529;
+    height:auto;
+    width: auto;
+    display: block;
+    align-items: center;
+    align-content: center; 
+    justify-content: center;  
+    z-index: 100000;
+  }
+  
+  .loader__element {
+    border-radius: 100%;
+    border: 5px solid rgb(223,223,223);
+    margin: 10px;
+  }  
+
+  .loader__element:nth-child(1) {
+    animation: preloader .6s ease-in-out alternate infinite;
+  }
+  .loader__element:nth-child(2) {
+    animation: preloader .6s ease-in-out alternate .2s infinite;
+  }
+  
+  .loader__element:nth-child(3) {
+    animation: preloader .6s ease-in-out alternate .4s infinite;
+  }
+  
+  @keyframes preloader {
+    100% { transform: scale(2); }
+  }
+  

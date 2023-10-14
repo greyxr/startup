@@ -45,7 +45,8 @@ async function handleInput() {
         return
     }
 
-    printToOutput(inputBox.value)
+    printToOutput('> '+ inputBox.value)
+    inputBox.value = ''
     await callGPT(inputBox.value, output.innerHTML)
     // let currentRoom = getRoom(roomObj, playerObj)
 
@@ -80,13 +81,11 @@ async function handleInput() {
     // console.log(playerObj)
     // console.log("Current Room:")
     // console.log(getRoom(roomObj, playerObj))
-
-    inputBox.value = ''
 }
 
 function toggleLoading() {
     let loading = document.getElementById('loading')
-    loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'block' : loading.style.display = 'none')
+    loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
 }
 
 function printInventory() {
@@ -167,8 +166,6 @@ async function setUpGame() {
     output.style.display = "block"
     input.style.display = "block"
 
-    printInventory()
-
     // let roomRes = await fetch("./rooms.json")
     // roomObj = await roomRes.json()
     // let playerRes = await fetch("./player.json")
@@ -184,7 +181,7 @@ async function initialPrint() {
 }
 
 async function handleSeed() {
-    printInventory();
+    document.getElementById('invDiv').style.display = "block"
     let seed = document.getElementById('seed')
     console.log('Seed: ' + seed.value)
     seed.style.display = "none"
@@ -197,7 +194,7 @@ async function handleSeed() {
     setUpGame()
 }
 
-async function callGPT(input, context) {
+async function callGPT(input, context, tries = '3') {
     toggleLoading()
     let apiKeyRes = await (await fetch("./config.json")).json()
     let apiKey = apiKeyRes.apiKey
@@ -208,7 +205,7 @@ async function callGPT(input, context) {
             {"role": "system", "content": `${prompt + context}`},
             {"role": "user", "content": `${input}`}
         ],
-        "temperature": 0.15
+        "temperature": 0.50
       };
       console.log("Request body:")
       console.log(requestData)
@@ -222,24 +219,28 @@ async function callGPT(input, context) {
         body: JSON.stringify(requestData)
       };
       
-      fetch(apiUrl, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            toggleLoading()
-          // Handle the API response data
-          console.log('API Response:', data);
-          console.log(data.choices[0].message.content)
+      try {
+        let response = await fetch(apiUrl, requestOptions)
+        let data = await response.json()
+        toggleLoading()
+        // Handle the API response data
+        console.log('API Response:', data);
         //   roomObj = JSON.parse(data.choices[0].message.content)
         //   console.log(roomObj)
-          let message = (data.choices[0].message.content)
-          console.log(message)
-          printToOutput(message)
-        })
-        .catch(error => {
-            toggleLoading()
-            console.error('API Request Error:', error)
-            printToOutput(error)
-        });
+        let message = (data.choices[0].message.content)
+        printInventory()
+        printToOutput(message)
+    } catch (e) {
+        toggleLoading()
+        console.error('API Request Error:', error)
+        if (tries != 0) {
+            console.log(`Automatically retrying... ${tries} left`)
+            callGPT(input, context, (tries - 1))
+        }
+        else {
+            printToOutput(`Network error ${error}. Please try again or refresh if issue persists.`)
+        }
+    }
 }
 
 function parseCommand(input) {

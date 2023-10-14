@@ -6,11 +6,11 @@ body {
     flex-direction: column;
     height: 100%;
     font-family:'Courier New', Courier, monospace;
-    font-size:large;
 }
 
 main {
     display: flex;
+    font-size:large;
     align-content: center;
     justify-content: center;
     align-items:center;

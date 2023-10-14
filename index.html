@@ -30,7 +30,13 @@
             <!-- output box and input box -->
         <div id="output"></div>
         <input type="input" id="input" class="form-control bg-dark text-white" placeholder="go north..." value="">
-        <div id="loading">Loading...</div>
+<div id="loading" class="loader">
+  <span class="loader__element"></span>
+  <span class="loader__element"></span>
+  <span class="loader__element"></span>
+</div>
+
+
       </section>
       <section class="emptySection hide-on-small-screen"></section>
     </main>
@@ -71,9 +77,6 @@
 </body>
 
 <script>
-  addEventListener("load", (event) => {});
-
-onload = (event) => printInventory();
     // Get the input field
 var seed = document.getElementById("seed");
 
