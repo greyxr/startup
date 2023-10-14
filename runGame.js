@@ -97,7 +97,7 @@ function printInventory() {
 
         const itemName = document.createElement('span')
         itemName.classList.add('item-name')
-        itemName.innerText = '-- ' + item.name
+        itemName.innerText = '--' + item.name
         itemDiv.appendChild(itemName)
 
         const actionDiv = document.createElement('div')
