@@ -90,14 +90,14 @@ function toggleLoading() {
 
 function printInventory() {
     let inventoryContainer = document.getElementById('invDiv')
-    inventoryContainer.innerHTML = ''
+    inventoryContainer.innerHTML = 'Inventory ------------'
     inventory.items.forEach(item => {
         const itemDiv = document.createElement('div')
         itemDiv.classList.add('inv-item')
 
         const itemName = document.createElement('span')
         itemName.classList.add('item-name')
-        itemName.innerText = item.name
+        itemName.innerText = '-- ' + item.name
         itemDiv.appendChild(itemName)
 
         const actionDiv = document.createElement('div')

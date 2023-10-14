@@ -26,7 +26,7 @@ main {
     display: none;
     height: auto;
     width: 80%;
-    margin-top: 8%;
+    margin-top: 5%;
 }
 
 .gameSection {
@@ -96,6 +96,7 @@ html {
 .inv-item {
     display: none;
     margin: 20px;
+    margin-left: 0px;
     display: flex;
     flex-direction: row;
     align-content:center;
