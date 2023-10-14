@@ -1,135 +1,39 @@
 // global variables
 let roomObj = ''
 let playerObj = ''
+let outputTotal = ''
+let inventory = {
+    items: [
+        {
+            name: "Sword",
+            actions: ["Drop", "Attack"]
+        },
+        {
+            name: "Mysterious box",
+            actions: ["Use", "Drop"]
+        },
+        {
+            name: "Dagger",
+            actions: ["Use", "Drop"]
+        }
+    ]
+}
+// let prompt = `You are a text adventure generator. When I give you input, you will respond with a JSON object containing an array of "rooms". Each room will contain a numerical id, a description of the room, a verbose description of the room, a "directions" array, and an "items" array.
+// Each room.description and room.verbose_description should contain descriptions of what directions the user can move in. Every room should lead to at least one other room.
+// The "directions" array will contain objects containing a direction the user can move in and the corresponding ID of the room.
+// Each object in the "items" array should contain a description and a verbose_description. In these descriptions, only reference the object, not the room. The descriptions and items in the rooms should be inspired from the input I give you.
+// Generate 10 room starting with room id 1.`
+
+let prompt = `You will respond to input as a classic text adventure game. You will never break
+character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
+command given, respond with 'You can't do that' and the reason why.
+
+Here is the context of previous messages:`
+
+//  1 room: response: 84, total: 264
+// 10 rooms: response 1090, total: 1268
 
 async function handleInput() {
-    // let roomObj = {
-    //     "rooms": [
-    //       {
-    //         "id": 1,
-    //         "description": "You are in a dusty old library with shelves full of books. To the north, you see a doorway.",
-    //         "verboseDescription": "The room is dimly lit, and the air smells musty. Dust motes dance in the light streaming through the windows. There is a doorway to the north.",
-    //         "objects": [
-    //           {
-    //             "name": "book",
-    //             "description": "An old, weathered book on the top shelf.",
-    //             "actions": {
-    //               "read": "You can read the book."
-    //             }
-    //           },
-    //           {
-    //             "name": "table",
-    //             "description": "A wooden table covered in dust.",
-    //             "actions": {
-    //               "examine": "You can examine the table."
-    //             }
-    //           }
-    //         ],
-    //         "directions": {
-    //           "north": 2
-    //         }
-    //       },
-    //       {
-    //         "id": 2,
-    //         "description": "You find yourself in a kitchen with a large stove and a dining table. To the south, you see a doorway. To the east, you see a garden.",
-    //         "verboseDescription": "The room is clean and organized. The smell of freshly baked bread fills the air. There is a doorway to the south and a garden to the east.",
-    //         "objects": [
-    //           {
-    //             "name": "stove",
-    //             "description": "A modern stainless steel stove.",
-    //             "actions": {
-    //               "turnOn": "You can turn on the stove."
-    //             }
-    //           },
-    //           {
-    //             "name": "table",
-    //             "description": "A wooden dining table set for a meal.",
-    //             "actions": {
-    //               "inspect": "You can inspect the table."
-    //             }
-    //           }
-    //         ],
-    //         "directions": {
-    //           "south": 1,
-    //           "east": 3
-    //         }
-    //       },
-    //       {
-    //         "id": 3,
-    //         "description": "You are in a garden surrounded by blooming flowers and lush greenery. To the west, you see a doorway. To the north, you see a basement entrance.",
-    //         "verboseDescription": "The garden is peaceful and full of life. Birds are chirping and flitting around. There is a doorway to the west and a basement entrance to the north.",
-    //         "objects": [
-    //           {
-    //             "name": "flowers",
-    //             "description": "Vibrant and colorful flowers of various kinds.",
-    //             "actions": {
-    //               "smell": "You can smell the flowers."
-    //             }
-    //           },
-    //           {
-    //             "name": "bench",
-    //             "description": "A sturdy wooden bench.",
-    //             "actions": {
-    //               "sit": "You can sit on the bench."
-    //             }
-    //           }
-    //         ],
-    //         "directions": {
-    //           "west": 2,
-    //           "north": 4
-    //         }
-    //       },
-    //       {
-    //         "id": 4,
-    //         "description": "You find yourself in a spooky basement with cobwebs and dim lighting. To the south, you see a garden. To the east, you see a treasure room.",
-    //         "verboseDescription": "The air is damp and cold. Strange sounds echo through the darkness. There is a garden to the south and a treasure room to the east.",
-    //         "objects": [
-    //           {
-    //             "name": "spiderweb",
-    //             "description": "A thick, sticky spiderweb stretching across the corner.",
-    //             "actions": {
-    //               "touch": "You can touch the spiderweb."
-    //             }
-    //           },
-    //           {
-    //             "name": "box",
-    //             "description": "A small, mysterious box covered in dust.",
-    //             "actions": {
-    //               "open": "You can open the box."
-    //             }
-    //           }
-    //         ],
-    //         "directions": {
-    //           "south": 3,
-    //           "east": 5
-    //         }
-    //       },
-    //       {
-    //         "id": 5,
-    //         "description": "You are in a treasure room with glittering gold and jewels. To the west, you see a basement entrance.",
-    //         "verboseDescription": "The room is filled with dazzling treasures. You've hit the jackpot! There is a basement entrance to the west.",
-    //         "objects": [
-    //           {
-    //             "name": "gold",
-    //             "description": "Shiny gold coins and bars.",
-    //             "actions": {
-    //               "grab": "You can grab some gold."
-    //             }
-    //           },
-    //           {
-    //             "name": "jewels",
-    //             "description": "Sparkling jewels of various colors and sizes.",
-    //             "actions": {
-    //               "examine": "You can examine the jewels."
-    //             }
-    //           }
-    //         ],
-    //         "directions": {
-    //           "west": 4
-    //         }
-    //       }
-    //     ]
-    //   }
 
 
     // Assign variables
@@ -141,42 +45,76 @@ async function handleInput() {
         return
     }
 
-    output.innerHTML += '> ' + inputBox.value + '<br>'
-    let currentRoom = getRoom(roomObj, playerObj)
+    printToOutput(inputBox.value)
+    await callGPT(inputBox.value, output.innerHTML)
+    // let currentRoom = getRoom(roomObj, playerObj)
 
-    // handle input
-    let command = parseCommand(inputBox.value)
-    if (command.error != null) {
-        printToOutput(command.message)
-        inputBox.value = ''
-        return
-    }
+    // // handle input
+    // let command = parseCommand(inputBox.value)
+    // if (command.error != null) {
+    //     printToOutput(command.message)
+    //     inputBox.value = ''
+    //     return
+    // }
 
-    let newOutput = ''
-    // get output
-    switch(command.action) {
-        case 'travel':
-            if (travel(currentRoom, playerObj, command.subject) == null) {
-                printToOutput('You can\'t go that way.')
-            } else {
-                printRoom()
-            }
-        case 'look':
-            if (command.subject === 'room') {
-                printRoom()
-            } else {
-                printToOutPut('Functionality not implemented yet.')
-            }
-    }
+    // let newOutput = ''
+    // // get output
+    // switch(command.action) {
+    //     case 'travel':
+    //         if (travel(currentRoom, playerObj, command.subject) == null) {
+    //             printToOutput('You can\'t go that way.')
+    //         } else {
+    //             printRoom()
+    //         }
+    //     case 'look':
+    //         if (command.subject === 'room') {
+    //             printRoom()
+    //         } else {
+    //             printToOutput('Functionality not implemented yet.')
+    //         }
+    // }
 
-    // print output
+    // // print output
 
-    console.log("Player:")
-    console.log(playerObj)
-    console.log("Current Room:")
-    console.log(getRoom(roomObj, playerObj))
+    // console.log("Player:")
+    // console.log(playerObj)
+    // console.log("Current Room:")
+    // console.log(getRoom(roomObj, playerObj))
 
     inputBox.value = ''
+}
+
+function toggleLoading() {
+    let loading = document.getElementById('loading')
+    loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'block' : loading.style.display = 'none')
+}
+
+function printInventory() {
+    let inventoryContainer = document.getElementById('invDiv')
+    inventoryContainer.innerHTML = ''
+    inventory.items.forEach(item => {
+        const itemDiv = document.createElement('div')
+        itemDiv.classList.add('inv-item')
+
+        const itemName = document.createElement('span')
+        itemName.classList.add('item-name')
+        itemName.innerText = item.name
+        itemDiv.appendChild(itemName)
+
+        const actionDiv = document.createElement('div')
+        actionDiv.classList.add('action-div')
+        itemDiv.appendChild(actionDiv)
+
+        item.actions.forEach(action => {
+            const actionButton = document.createElement('button')
+            actionButton.classList.add('action-button')
+            actionButton.classList.add('rounded')
+            actionButton.innerText = action
+            actionDiv.appendChild(actionButton)
+        })
+        inventoryContainer.appendChild(itemDiv)
+    })
+
 }
 
 function getRoom(roomObj, playerObj) {
@@ -211,8 +149,8 @@ function printRoom() {
     } else {
         output.innerText += currentRoom.description + '\n'
     }
-    for (object of currentRoom.objects) {
-        output.innerText += object.roomDescription + '\n'
+    for (item of currentRoom.items) {
+        output.innerText += item.roomDescription + '\n'
     }
 
     output.scrollTop = output.scrollHeight
@@ -229,12 +167,15 @@ async function setUpGame() {
     output.style.display = "block"
     input.style.display = "block"
 
-    let roomRes = await fetch("./rooms.json")
-    roomObj = await roomRes.json()
-    let playerRes = await fetch("./player.json")
-    playerObj = await playerRes.json()
+    printInventory()
 
-    await initialPrint()
+    // let roomRes = await fetch("./rooms.json")
+    // roomObj = await roomRes.json()
+    // let playerRes = await fetch("./player.json")
+    // playerObj = await playerRes.json()
+    // playerObj.currentRoom = roomObj[0].id
+
+    // await initialPrint()
 }
 
 async function initialPrint() {
@@ -243,24 +184,34 @@ async function initialPrint() {
 }
 
 async function handleSeed() {
+    printInventory();
     let seed = document.getElementById('seed')
     console.log('Seed: ' + seed.value)
     seed.style.display = "none"
     document.getElementById('seedP').style.display = "none"
-    await seedGame()
+    let prompt = 'The genre for this text adventure is inspired by ' + seed.value
+    toggleLoading() // So that the loading div starts in the correct state
+    await callGPT(prompt, "Where am I?")
+    console.log("initialStart: ")
+    // printToOutput(initialStart)
     setUpGame()
 }
 
-async function seedGame(input) {
-    console.log("In seedGame")
+async function callGPT(input, context) {
+    toggleLoading()
     let apiKeyRes = await (await fetch("./config.json")).json()
     let apiKey = apiKeyRes.apiKey
     let apiUrl = 'https://api.openai.com/v1/chat/completions'
     const requestData = {
         "model": "gpt-3.5-turbo",
-        "messages": [{"role": "user", "content": "Say this is a test!"}],
-        "temperature": 0.7
+        "messages": [
+            {"role": "system", "content": `${prompt + context}`},
+            {"role": "user", "content": `${input}`}
+        ],
+        "temperature": 0.15
       };
+      console.log("Request body:")
+      console.log(requestData)
       
       const requestOptions = {
         method: 'POST',
@@ -274,10 +225,21 @@ async function seedGame(input) {
       fetch(apiUrl, requestOptions)
         .then(response => response.json())
         .then(data => {
+            toggleLoading()
           // Handle the API response data
           console.log('API Response:', data);
+          console.log(data.choices[0].message.content)
+        //   roomObj = JSON.parse(data.choices[0].message.content)
+        //   console.log(roomObj)
+          let message = (data.choices[0].message.content)
+          console.log(message)
+          printToOutput(message)
         })
-        .catch(error => console.error('API Request Error:', error));
+        .catch(error => {
+            toggleLoading()
+            console.error('API Request Error:', error)
+            printToOutput(error)
+        });
 }
 
 function parseCommand(input) {
