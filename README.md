@@ -52,3 +52,12 @@ Xormbalfu will run off of Javascript in the browser.
 - <b>Database</b> - Each time a command is input from the user, the webapp will pull new descriptions from the database. The high score table will also pull its information from the database.
 - <b>Websocket</b> - The count at the bottom of the screen will keep track of the number of logged in users there are at a time (and guest users if I can figure it out).
 - <b>Third party service calls</b> - I'm a little lost as to what to do here, but for the present I added a line on the scores page that will pull a random quote from the Kanye Rest API and display it there.
+
+## CSS Deliverable
+- <b>Changes</b> - I made some modifications to my website's plan in order to incorporate third party service calls, and so since a scores page didn't make sense, I changed it to an about page. I won't be tracking scores in a database anymore, but I'll still be tracking game saves and user data to satisfy the database requirement. Instead of making my own text adventure, I'm using the OpenAI API to generate one inspired by user input.
+- <b>Header, footer, and main content body</b> - As part of the CSS deliverable, I styled the three pages made for the HTML deliverable and defined and styled the main body and footer. Since I'm going for an intentionally minimalist website design, I put everything I needed for the header and footer in just the footer and left the header blank on purpose.
+- <b>Navigation elements</b> - I put a Bootstrap nav bar at the bottom of the screen. It will change depending on the size of the screen and contains links to the three webpages as well as a link to my Github.
+- <b>Responsive to window resizing</b> - All three pages are responsive to window sizing to one degree or another. For the home page, the main game secion normally has the inventory on the left and the text output in the middle, but at a certain width it changes to be stacked on each other. The about page also change where the text is placed depending on the size of the screen.
+- <b>Application elements</b> - I have most of the javascript for the game running already, but all of the elements I need are there and working. I used flexbox to order and place all of the elements, and some javascript to make elements appear and disappear.
+- <b>Application text content</b> - I used consistent fonts and animated the text on the home and about pages.
+- <b>Application images</b> - Since this is a minimalist text adventure, the only image in the application is on the about page.
