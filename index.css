@@ -81,6 +81,22 @@ html {
     overflow: auto;
 }
 
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .word {
+    opacity: 0; /* Start with 0 opacity */
+    animation: fadeIn 0.5s forwards; /* Use the fadeIn animation */
+  }
+
 #input {
     margin: 20px;
     margin-top:10%;
@@ -109,11 +125,13 @@ html {
     display: flex;
     align-content: center;
 }
-  .item-name {
+
+.item-name {
     margin: 10px;
     /* outline:solid; */
   }
-  .action-button {
+
+.action-button {
     margin-right: 10px;
     background-color: #212529;
     color: white
@@ -144,11 +162,11 @@ html {
   }
 
 
-  /* Loading effect */
+/* Loading effect */
 
-  .loader {
+.loader {
     overflow: hidden;
-    background-color:#212529;
+    background-color: rgba(33, 37, 41, 0);
     height:auto;
     width: auto;
     display: block;
@@ -156,26 +174,27 @@ html {
     align-content: center; 
     justify-content: center;  
     z-index: 100000;
-  }
+}
   
-  .loader__element {
+.loader__element {
     border-radius: 100%;
     border: 5px solid rgb(223,223,223);
     margin: 10px;
-  }  
+}  
 
-  .loader__element:nth-child(1) {
+.loader__element:nth-child(1) {
     animation: preloader .6s ease-in-out alternate infinite;
-  }
-  .loader__element:nth-child(2) {
+}
+
+.loader__element:nth-child(2) {
     animation: preloader .6s ease-in-out alternate .2s infinite;
-  }
+}
   
-  .loader__element:nth-child(3) {
+.loader__element:nth-child(3) {
     animation: preloader .6s ease-in-out alternate .4s infinite;
-  }
+}
   
-  @keyframes preloader {
+@keyframes preloader {
     100% { transform: scale(2); }
-  }
+}
   

@@ -15,7 +15,6 @@
 <header>
 </header>
 <main>
-  <!-- <button onclick="animateText()">Press me</button> -->
   <div id="wordContainer">
     <div id="outputDiv">
     </div>
@@ -62,27 +61,11 @@
 <script>
   
 addEventListener("load", (event) => {});
-
-onload = (event) => animateText();
-
-
-
-function animateText() {
 const sentence = `Xormbalfu is an experiment with using Chat-GPT to generate random
 text adventures. On the start screen, you will be prompted for a few words or a phrase.
 Chat-GPT will then use that to seed a playable text adventure. It takes in previous commands and
-responses so it has can keep a static adventure going, although only for 3000 words or so.
+responses so it has can keep a static adventure going, but only for 3000 words or so.
 OpenAI's API is still in development, so please be patient with load times. It might take up to 15
 seconds for a response.`;
-const words = sentence.split(' ');
-
-const outputDiv = document.getElementById('outputDiv');
-words.forEach((word, index) => {
-  const wordDiv = document.createElement('span');
-  wordDiv.textContent = word + ' ';
-  wordDiv.classList.add('word');
-  wordDiv.style.animationDelay = `${0.04 * (index + 1)}s`;
-  outputDiv.appendChild(wordDiv);
-});
-}
+onload = (event) => animateText(sentence, 'outputDiv');
 </script>

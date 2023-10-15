@@ -26,20 +26,6 @@ html {
     height: 100%;
 }
 
-.loginBox {
-    margin-top: 5px;
-    margin-bottom: 15px;
-}
-
-.bg-dark::placeholder {
-    color: rgb(136, 136, 136);
-}
-
-.loginLabel {
-    font-style: italic;
-    margin: 0px;
-}
-
 #wordContainer {
     display: flex;
     flex-direction: column;
