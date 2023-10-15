@@ -86,7 +86,6 @@ async function handleSeed() {
     output = document.getElementById('output')
     input = document.getElementById('input')
     output.style.display = "block"
-    input.style.display = "block"
     document.getElementById('invDiv').style.display = "block"
     let seed = document.getElementById('seed')
     console.log('Seed: ' + seed.value)
@@ -95,6 +94,7 @@ async function handleSeed() {
     let prompt = 'The genre for this text adventure is inspired by ' + seed.value
     toggleLoading() // So that the loading div starts in the correct state
     await callGPT(prompt, "Where am I?")
+    input.style.display = "block"
 }
 
 async function callGPT(input, context, tries = '3') {
