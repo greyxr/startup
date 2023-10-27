@@ -1,20 +1,59 @@
-1.
+Problem 1.
 
-FIRST(rule) = [ID]
-FIRST(query) = [ID]
-FIRST(schemeList) = [ID, lambda]
-FIRST(factList) = [ID, lambda]
-FIRST(ruleList) = [ID, lambda]
-FIRST(queryList) = [ID, lambda]
+1.∀x A(x) Premise
+2.∀x [¬A(x)∨C(x)] Premise
+3.∀x∀w [¬C(x)∨F(w)] Premise
+4. A(d) UI on 1
+5. ¬A(d)∨C(d) UI on 2
+6. C(d) Resolution on 4 & 5
+7. ¬C(d)∨F(c) UI on 3
+8. F(c) Resolution on 6 & 7
+9. F(c) Conclusion
 
-2.
+Problem 2.
 
-FOLLOW(schemeList) = [FACTS]
-FOLLOW(factList) = [RULES]
-FOLLOW(ruleList) = [QUERIES]
-FOLLOW(queryList) = [EOF]
-FOLLOW(predicateList) = [PERIOD]
-FOLLOW(parameterList) = [RIGHT_PAREN]
-FOLLOW(stringList) = [RIGHT_PAREN]
-FOLLOW(idList) = [RIGHT_PAREN]
+Let the domain of the variables x, y, and w be the set {a,b,c}. Given the
+following premises, use resolution, universal generalization (Table 2 in
+seciton 1.6.7), and universal instantiation to prove ∀x B(x). 
 
+1. ¬A(x)∨ B(y)
+2. ¬C(x)∨ G(w)
+3. ¬G(x)
+4. A(x)
+
+5. Instantiate 1 with d (arbitrary)
+¬A(d)∨ B(d)
+
+6. Instantiate 4 with d (arbitary)
+A(d)
+
+7. Resolution on 5 and 6
+B(d)
+
+8. UG on 7
+∀x B(x)
+
+Problem 3.
+∀w ¬C(w)
+
+1. ¬A(x)∨ B(y)
+2. ¬C(x)∨ G(w)
+3. ¬G(x)
+4. A(x)
+
+5. Instantiate 2 and 3 with d (arbitrary)
+¬C(d)∨ G(d), ¬G(d)
+
+6. Resolution on 5
+¬C(d)
+
+7. UG on 6
+∀w ¬C(w)
+
+Problem 4.
+
+¬∀x(P(x) ∧ Q(y) → ∃zR(z))
+¬∀xP(x) ∧ Q(y) → ∃zR(z)
+∃x¬P(x) ∧ Q(y) → ∃zR(z)
+∃x(¬P(x) ∧ Q(y) → ∃zR(z))
+∃x∀z(P(x)∧Q(y) → ¬R(z))
