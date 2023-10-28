@@ -1,27 +1,20 @@
 // global variables
-let inventory = {
-    items: [
-        {
-            name: "Sword",
-            actions: ["Drop", "Attack"]
-        },
-        {
-            name: "Mysterious box",
-            actions: ["Use", "Drop"]
-        },
-        {
-            name: "Dagger",
-            actions: ["Use", "Drop"]
-        }
-    ]
-}
+let inventory = []
 
 let outputHistory = ''
 
-let prompt = `You will respond to input as a classic text adventure game. You will never break
-character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
-command given, respond with 'You can't do that' and the reason why. Occasionally make sarcastic comments about the player's choices.
+let prompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
+of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
+command given, respond with the reason why. Include an item in your description of every room
+for the player to pick up if they want, but only put it in their inventory if they ask for it.
+At the end of each message no matter what the player says, respond with an array containing the player's inventory if
+there is anything, like this:
+["book", "sword", "mysterious box"]
 
+You need to keep track of the inventory array over time, so that the user has a consistent experience. When the user adds or drops an item from the inventory, go through the context thoroughly to determine what should be in the inventory.
+
+If there is previous context, return the most recent array from there instead unless the current action has altered it, in which case return the updated array.
 Here is the context of previous messages:`
 
 async function handleInput() {
@@ -48,29 +41,31 @@ function toggleLoading() {
 function printInventory() {
     let inventoryContainer = document.getElementById('invDiv')
     inventoryContainer.innerHTML = 'Inventory ------------'
-    inventory.items.forEach(item => {
+    if (inventory.length != 0) {
+        console.log('stuff')
+    for (item of inventory) {
         const itemDiv = document.createElement('div')
         itemDiv.classList.add('inv-item')
 
         const itemName = document.createElement('span')
         itemName.classList.add('item-name')
-        itemName.innerText = '--' + item.name
+        itemName.innerText = '--' + item
         itemDiv.appendChild(itemName)
 
-        const actionDiv = document.createElement('div')
-        actionDiv.classList.add('action-div')
-        itemDiv.appendChild(actionDiv)
+        // const actionDiv = document.createElement('div')
+        // actionDiv.classList.add('action-div')
+        // itemDiv.appendChild(actionDiv)
 
-        item.actions.forEach(action => {
-            const actionButton = document.createElement('button')
-            actionButton.classList.add('action-button')
-            actionButton.classList.add('rounded')
-            actionButton.innerText = action
-            actionDiv.appendChild(actionButton)
-        })
+        // item.actions.forEach(action => {
+        //     const actionButton = document.createElement('button')
+        //     actionButton.classList.add('action-button')
+        //     actionButton.classList.add('rounded')
+        //     actionButton.innerText = action
+        //     actionDiv.appendChild(actionButton)
+        // })
         inventoryContainer.appendChild(itemDiv)
-    })
-
+}
+}
 }
 
 function printToOutput(outputText) {
@@ -78,6 +73,8 @@ function printToOutput(outputText) {
     // output.innerText += outputText + '\n'
     outputText += '\n'
     outputHistory += outputText
+    invIndex = outputText.indexOf('[')
+    if (invIndex != 0 && invIndex != -1) outputText = (outputText.slice(0,invIndex) + '\n')
     animateText(outputText, 'output')
     output.scrollTop = output.scrollHeight
 }
@@ -126,10 +123,25 @@ async function callGPT(input, context, tries = '3') {
         let response = await fetch(apiUrl, requestOptions)
         let data = await response.json()
         toggleLoading()
-        let message = (data.choices[0].message.content)
-        printInventory()
-        printToOutput(message)
-    } catch (e) {
+        try {
+            let invIndex = data.choices[0].message.content.indexOf('[')
+            let message = data.choices[0].message.content
+            if (invIndex != -1) {
+                // if (invIndex != 0) message = message.slice(0, invIndex)
+                let newInventory = message.slice(invIndex)
+                console.log(newInventory)
+                if (newInventory != '') {
+                    inventory = JSON.parse(newInventory)
+                }
+            }
+            printInventory()
+            printToOutput(message)
+        }
+        catch (e) {
+            console.error(e)
+            printToOutput('Network error occurred. Please try again.')
+        }
+    } catch (error) {
         toggleLoading()
         console.error('API Request Error:', error)
         if (tries != 0) {
