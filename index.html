@@ -67,7 +67,7 @@
             <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/greyxr/startup">Save</a>
+            <a class="nav-link" onclick="saveGame()">Save</a>
           </li>
           <li class="nav-item">
             <!-- kind of an ugly solution, but it gets the visual effect -->
@@ -81,6 +81,10 @@
 </body>
 
 <script>
+
+addEventListener("load", (event) => {});
+onload = (event) => loadGame();
+
     // Get the input field
 var seed = document.getElementById("seed");
 

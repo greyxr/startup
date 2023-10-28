@@ -154,7 +154,7 @@ async function callGPT(input, context, tries = '3') {
     }
 }
 
-function animateText(sentence, outputElement) {
+function animateText(sentence, outputElement, delay = 0.04) {
     const words = sentence.split(' ');
     
     const outputDiv = document.getElementById(outputElement);
@@ -162,9 +162,32 @@ function animateText(sentence, outputElement) {
       const wordDiv = document.createElement('span');
       wordDiv.textContent = word + ' ';
       wordDiv.classList.add('word');
-      wordDiv.style.animationDelay = `${0.04 * (index + 1)}s`;
+      wordDiv.style.animationDelay = `${delay* (index + 1)}s`;
       outputDiv.appendChild(wordDiv);
     })
     outputDiv.appendChild(document.createElement('br'))
     outputDiv.appendChild(document.createElement('br'))
     }
+
+async function loadGame() {
+    console.log('loadGame hit!')
+    let currentGame = localStorage.getItem("outputHistory")
+    if (currentGame != null) {
+        console.log('game found')
+        output = document.getElementById('output')
+        input = document.getElementById('input')
+        document.getElementById('beginButton').style.display = "none"
+        output.style.display = "block"
+        document.getElementById('invDiv').style.display = "block"
+        let seed = document.getElementById('seed')
+        seed.style.display = "none"
+        document.getElementById('seedP').style.display = "none"
+        outputHistory = currentGame
+        animateText(outputHistory, 'output')
+        input.style.display = "block"
+    }
+}
+
+function saveGame() {
+    localStorage.setItem("outputHistory", outputHistory)
+}
