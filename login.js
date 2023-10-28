@@ -28,4 +28,43 @@ function loadUsername() {
 }
 
 addEventListener("load", (event) => {});
-onload = (event) => loadUsername();
+onload = (event) => onLoadFunctions();
+
+async function loadGame() {
+    // This will be hooked up the the database. Right now it's just storing and grabbing outputhistory from localstorage.
+    console.log('loadGame hit!')
+    let currentGame = localStorage.getItem("outputHistory")
+    // if (currentGame != null) {
+    //     console.log('game found')
+    //     output = document.getElementById('output')
+    //     input = document.getElementById('input')
+    //     document.getElementById('beginButton').style.display = "none"
+    //     output.style.display = "block"
+    //     document.getElementById('invDiv').style.display = "block"
+    //     let seed = document.getElementById('seed')
+    //     seed.style.display = "none"
+    //     document.getElementById('seedP').style.display = "none"
+    //     outputHistory = currentGame
+    //     input.style.display = "block"
+    //     printInventory()
+    //     animateText('Game loaded.', 'output')
+    //     handleInput()
+    // }
+}
+
+function saveGame() {
+    // This will be hooked up the the database. Right now it's just storing and grabbing outputhistory from localstorage.
+    localStorage.setItem("outputHistory", outputHistory)
+}
+
+function loadUsersOnline() {
+    console.log('loadUsersOnline hit!')
+    let usersOnlineSpan = document.getElementById('usersOnline')
+    usersOnlineSpan.innerText = Math.floor(Math.random() * 10) + 1
+}
+
+function onLoadFunctions() {
+    loadGame()
+    loadUsername()
+    loadUsersOnline()
+}

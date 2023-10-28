@@ -37,10 +37,10 @@ function toggleLoading() {
     console.log('loading toggled')
     console.log('Current toggled:')
     let loading = document.getElementById('loading')
-    console.log(loading.style.display)
-    if (loading.style.display === 'none') loading.style.display = 'flex'
-    else if (loading.style.display === 'flex') loading.style.display = 'none'
-    //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+    // console.log(loading.style.display)
+    // if (loading.style.display === 'none') loading.style.display = 'flex'
+    // else if (loading.style.display === 'flex') loading.style.display = 'none'
+    loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
 }
 
 function printInventory() {
@@ -56,18 +56,6 @@ function printInventory() {
         itemName.classList.add('item-name')
         itemName.innerText = '--' + item
         itemDiv.appendChild(itemName)
-
-        // const actionDiv = document.createElement('div')
-        // actionDiv.classList.add('action-div')
-        // itemDiv.appendChild(actionDiv)
-
-        // item.actions.forEach(action => {
-        //     const actionButton = document.createElement('button')
-        //     actionButton.classList.add('action-button')
-        //     actionButton.classList.add('rounded')
-        //     actionButton.innerText = action
-        //     actionDiv.appendChild(actionButton)
-        // })
         inventoryContainer.appendChild(itemDiv)
 }
 }
@@ -174,28 +162,3 @@ function animateText(sentence, outputElement, delay = 0.04) {
     outputDiv.appendChild(document.createElement('br'))
     outputDiv.appendChild(document.createElement('br'))
     }
-
-async function loadGame() {
-    console.log('loadGame hit!')
-    let currentGame = localStorage.getItem("outputHistory")
-    if (currentGame != null) {
-        console.log('game found')
-        output = document.getElementById('output')
-        input = document.getElementById('input')
-        document.getElementById('beginButton').style.display = "none"
-        output.style.display = "block"
-        document.getElementById('invDiv').style.display = "block"
-        let seed = document.getElementById('seed')
-        seed.style.display = "none"
-        document.getElementById('seedP').style.display = "none"
-        outputHistory = currentGame
-        input.style.display = "block"
-        printInventory()
-        animateText('Game loaded.', 'output')
-        handleInput()
-    }
-}
-
-function saveGame() {
-    localStorage.setItem("outputHistory", outputHistory)
-}

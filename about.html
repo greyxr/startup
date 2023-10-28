@@ -49,7 +49,7 @@
             </li>
             <li class="nav-item">
               <!-- kind of an ugly solution, but it gets the visual effect -->
-              <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">6 users online, currently logged in as <span id="userNameSpan"></span></a>
+              <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true"><span id="usersOnline"></span> users online, currently logged in as <span id="userNameSpan"></span></a>
             </li>
           </ul>
         </div>
@@ -67,5 +67,8 @@ Chat-GPT will then use that to seed a playable text adventure. It takes in previ
 responses so it has can keep a static adventure going, but only for 3000 words or so.
 OpenAI's API is still in development, so please be patient with load times. It might take up to 15
 seconds for a response.`;
-onload = (event) => animateText(sentence, 'outputDiv');
+onload = (event) => {
+  onLoadFunctions()
+  animateText(sentence, 'outputDiv');
+}
 </script>
