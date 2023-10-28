@@ -34,8 +34,13 @@ async function handleInput() {
 }
 
 function toggleLoading() {
+    console.log('loading toggled')
+    console.log('Current toggled:')
     let loading = document.getElementById('loading')
-    loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+    console.log(loading.style.display)
+    if (loading.style.display === 'none') loading.style.display = 'flex'
+    else if (loading.style.display === 'flex') loading.style.display = 'none'
+    //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
 }
 
 function printInventory() {
@@ -95,6 +100,7 @@ async function handleSeed() {
 }
 
 async function callGPT(input, context, tries = '3') {
+    console.log('callGPT hit!')
     toggleLoading()
     let apiKeyRes = await (await fetch("./config.json")).json()
     let apiKey = apiKeyRes.apiKey
@@ -183,8 +189,10 @@ async function loadGame() {
         seed.style.display = "none"
         document.getElementById('seedP').style.display = "none"
         outputHistory = currentGame
-        animateText(outputHistory, 'output')
         input.style.display = "block"
+        printInventory()
+        animateText('Game loaded.', 'output')
+        handleInput()
     }
 }
 
