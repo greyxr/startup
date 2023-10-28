@@ -67,7 +67,7 @@
             <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" onclick="saveGame()">Save</a>
+            <a class="nav-link" onclick="saveGame(); if(gameStarted) { console.log('printed!'); printToOutput('\nGame saved.', true) }">Save</a>
           </li>
           <li class="nav-item">
             <!-- kind of an ugly solution, but it gets the visual effect -->

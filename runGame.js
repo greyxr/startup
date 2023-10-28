@@ -3,6 +3,8 @@ let inventory = []
 
 let outputHistory = ''
 
+let gameStarted = false
+
 let prompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
 character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
 of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
@@ -61,11 +63,13 @@ function printInventory() {
 }
 }
 
-function printToOutput(outputText) {
+function printToOutput(outputText, displayOnly = false) {
     let output = document.getElementById('output')
     // output.innerText += outputText + '\n'
     outputText += '\n'
-    outputHistory += outputText
+    if (!displayOnly) {
+        outputHistory += outputText
+    }
     invIndex = outputText.indexOf('[')
     if (invIndex != 0 && invIndex != -1) outputText = (outputText.slice(0,invIndex) + '\n')
     animateText(outputText, 'output')
@@ -85,6 +89,7 @@ async function handleSeed() {
     toggleLoading() // So that the loading div starts in the correct state
     await callGPT(prompt, "Where am I?")
     input.style.display = "block"
+    gameStarted = true
 }
 
 async function callGPT(input, context, tries = '3') {
@@ -133,7 +138,10 @@ async function callGPT(input, context, tries = '3') {
         }
         catch (e) {
             console.error(e)
-            printToOutput('Network error occurred. Please try again.')
+            if (tries != 0) {
+                console.log(`Automatically retrying... ${tries} left`)
+                callGPT(input, context, (tries - 1))
+            }
         }
     } catch (error) {
         toggleLoading()

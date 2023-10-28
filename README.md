@@ -61,3 +61,7 @@ Xormbalfu will run off of Javascript in the browser.
 - <b>Application elements</b> - I have most of the javascript for the game running already, and all of the CSS/HTML elements I need are there and working. I used flexbox to order and place all of the elements, and some javascript to make elements appear and disappear.
 - <b>Application text content</b> - I used consistent fonts and animated the text on the home and about pages.
 - <b>Application images</b> - Since this is a minimalist text adventure, the only image in the application is on the about page.
+
+## Javascript Deliverable
+- <b>Support for future login</b> - The login page will now store the user's username in local storage on login and redirect them to the home page after a second (to simulate the database connection). After this, the user's username will be displayed on the bottom of each page.
+- <b>Support for future database data</b> - The save button on the home page now links to a function that will save the game when database support is introduced. Right now, it just saves the game in localStorage. On page load, the website will call loadGame(), which in the future will load the user's game if they are logged in.
