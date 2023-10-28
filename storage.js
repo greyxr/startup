@@ -32,6 +32,8 @@ onload = (event) => onLoadFunctions();
 
 async function loadGame() {
     // This will be hooked up the the database. Right now it's just storing and grabbing outputhistory from localstorage.
+    // I was messing around with keeping the current game in localStorage, but I'm going to wait until I have database
+    // support, which is why this is commented out.
     console.log('loadGame hit!')
     let currentGame = localStorage.getItem("outputHistory")
     // if (currentGame != null) {
