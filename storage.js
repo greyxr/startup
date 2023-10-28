@@ -60,7 +60,11 @@ function saveGame() {
 function loadUsersOnline() {
     console.log('loadUsersOnline hit!')
     let usersOnlineSpan = document.getElementById('usersOnline')
-    usersOnlineSpan.innerText = Math.floor(Math.random() * 10) + 1
+    usersOnlineSpan.innerText = getUsersOnline()
+}
+
+function getUsersOnline() {
+    return Math.floor(Math.random() * 10) + 1
 }
 
 function onLoadFunctions() {
@@ -68,3 +72,6 @@ function onLoadFunctions() {
     loadUsername()
     loadUsersOnline()
 }
+
+// This simulates the websocket data for now. Every minute the number of users updates.
+let interval = setInterval(function () { loadUsersOnline(); }, 60000);
