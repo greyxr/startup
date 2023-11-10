@@ -5,7 +5,7 @@ let outputHistory = ''
 
 let gameStarted = false
 
-let prompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+let oldPrompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
 character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
 of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
 command given, respond with the reason why. Include an item in your description of every room
@@ -17,6 +17,12 @@ there is anything, like this:
 You need to keep track of the inventory array over time, so that the user has a consistent experience. When the user adds or drops an item from the inventory, go through the context thoroughly to determine what should be in the inventory.
 
 If there is previous context, return the most recent array from there instead unless the current action has altered it, in which case return the updated array.
+Here is the context of previous messages:`
+
+let prompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
+of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
+command given, respond with the reason why.
 Here is the context of previous messages:`
 
 async function handleInput() {
@@ -123,17 +129,17 @@ async function callGPT(input, context, tries = '3') {
         let data = await response.json()
         toggleLoading()
         try {
-            let invIndex = data.choices[0].message.content.indexOf('[')
+            // let invIndex = data.choices[0].message.content.indexOf('[')
             let message = data.choices[0].message.content
-            if (invIndex != -1) {
-                // if (invIndex != 0) message = message.slice(0, invIndex)
-                let newInventory = message.slice(invIndex)
-                console.log(newInventory)
-                if (newInventory != '') {
-                    inventory = JSON.parse(newInventory)
-                }
-            }
-            printInventory()
+            // if (invIndex != -1) {
+            //     // if (invIndex != 0) message = message.slice(0, invIndex)
+            //     let newInventory = message.slice(invIndex)
+            //     console.log(newInventory)
+            //     if (newInventory != '') {
+            //         inventory = JSON.parse(newInventory)
+            //     }
+            // }
+            // printInventory()
             printToOutput(message)
         }
         catch (e) {

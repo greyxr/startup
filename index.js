@@ -15,14 +15,20 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // GetScores
-apiRouter.get('/scores', (_req, res) => {
+apiRouter.get('/saveGame', (_req, res) => {
   res.send(scores);
 });
 
+// GetScores
+apiRouter.get('/loadGame', (req, res) => {
+  let userName = req.query.userName
+  res.send(loadGame(userName))
+});
+
 // SubmitScore
-apiRouter.post('/score', (req, res) => {
-  scores = updateScores(req.body, scores);
-  res.send(scores);
+apiRouter.post('/saveGame', (req, res) => {
+  game = saveGame(req.body);
+  res.send(game);
 });
 
 // Return the application's default page if the path is unknown
@@ -33,6 +39,24 @@ app.use((_req, res) => {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+let savedGames = {}
+
+function saveGame(body) {
+  outputHistory = body.output
+  userName = body.userName
+  savedGames[userName] = outputHistory
+  return savedGames[userName]
+}
+
+function loadGame(userName) {
+  console.log('loadGame hit with username ' + userName)
+  if (savedGames[userName] != {}) {
+    return savedGames[userName]
+  } else {
+    return null
+  }
+}
 
 // updateScores considers a new score for inclusion in the high scores.
 // The high scores are saved in memory and disappear whenever the service is restarted.

@@ -109,10 +109,27 @@ input.addEventListener("keypress", function(event) {
   }
 });
 
-function toggleBeginButton() {
-    document.getElementById('beginButton').style.display = "none"
-    document.getElementById('seed').style.display = "block"
-    document.getElementById('seedP').style.display = "block"
-    document.getElementById('seed').value = ''
+async function toggleBeginButton() {
+    let userName = document.getElementById('userNameSpan').innerText
+    let currentGame = await fetch('/api/loadGame?userName=' + userName)
+    if (userName == 'guest' || currentGame == null) {
+      console.log('Starting new game')
+      document.getElementById('beginButton').style.display = "none"
+      document.getElementById('seed').style.display = "block"
+      document.getElementById('seedP').style.display = "block"
+      document.getElementById('seed').value = ''
+    }
+    else {
+      console.log('Retrieving saved game')
+      output = document.getElementById('output')
+      input = document.getElementById('input')
+      output.style.display = "block"
+      document.getElementById('invDiv').style.display = "block"
+      seed.style.display = "none"
+      document.getElementById('seedP').style.display = "none"
+      toggleLoading() // So that the loading div starts in the correct state
+      await callGPT(currentGame, "Where am I?")
+      input.style.display = "block"
+    }
 }
 </script>
