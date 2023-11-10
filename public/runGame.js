@@ -5,7 +5,7 @@ let outputHistory = ''
 
 let gameStarted = false
 
-let oldPrompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+let oldPrompt = `You are a narrator in a classic text adventure game. You will never break
 character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
 of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
 command given, respond with the reason why. Include an item in your description of every room
@@ -76,8 +76,8 @@ function printToOutput(outputText, displayOnly = false) {
     if (!displayOnly) {
         outputHistory += outputText
     }
-    invIndex = outputText.indexOf('[')
-    if (invIndex != 0 && invIndex != -1) outputText = (outputText.slice(0,invIndex) + '\n')
+    // invIndex = outputText.indexOf('[')
+    // if (invIndex != 0 && invIndex != -1) outputText = (outputText.slice(0,invIndex) + '\n')
     animateText(outputText, 'output')
     output.scrollTop = output.scrollHeight
 }
@@ -129,18 +129,10 @@ async function callGPT(input, context, tries = '3') {
         let data = await response.json()
         toggleLoading()
         try {
-            // let invIndex = data.choices[0].message.content.indexOf('[')
             let message = data.choices[0].message.content
-            // if (invIndex != -1) {
-            //     // if (invIndex != 0) message = message.slice(0, invIndex)
-            //     let newInventory = message.slice(invIndex)
-            //     console.log(newInventory)
-            //     if (newInventory != '') {
-            //         inventory = JSON.parse(newInventory)
-            //     }
-            // }
-            // printInventory()
             printToOutput(message)
+            // Saves the game locally
+            localStorage.setItem("outputHistory", outputHistory)
         }
         catch (e) {
             console.error(e)

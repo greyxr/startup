@@ -111,8 +111,11 @@ input.addEventListener("keypress", function(event) {
 
 async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText
-    let currentGame = await fetch('/api/loadGame?userName=' + userName)
-    if (userName == 'guest' || currentGame == null) {
+    let response = await fetch('/api/loadGame?userName=' + userName)
+    console.log(response)
+    let currentGame = await response.json()
+    console.log(currentGame)
+    if (userName == 'guest' || currentGame.game == 'none') {
       console.log('Starting new game')
       document.getElementById('beginButton').style.display = "none"
       document.getElementById('seed').style.display = "block"
@@ -121,6 +124,8 @@ async function toggleBeginButton() {
     }
     else {
       console.log('Retrieving saved game')
+      console.log(currentGame)
+      document.getElementById('beginButton').style.display = "none"
       output = document.getElementById('output')
       input = document.getElementById('input')
       output.style.display = "block"
@@ -128,8 +133,20 @@ async function toggleBeginButton() {
       seed.style.display = "none"
       document.getElementById('seedP').style.display = "none"
       toggleLoading() // So that the loading div starts in the correct state
-      await callGPT(currentGame, "Where am I?")
+      //await callGPT(currentGame, "Where am I?")
+      //printToOutput(currentGame.game)
+      printCurrentGame(currentGame.game)
       input.style.display = "block"
+      gameStarted = true
     }
+}
+
+function printCurrentGame(game) {
+  const outputDiv = document.getElementById("output");
+  // console.log("Current game is:" + game)
+  let newDiv = document.createElement('div')
+  newDiv.innerText = game + '\n'
+  outputDiv.appendChild(newDiv)
+  outputDiv.scrollTop = output.scrollHeight
 }
 </script>

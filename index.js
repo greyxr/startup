@@ -15,11 +15,6 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // GetScores
-apiRouter.get('/saveGame', (_req, res) => {
-  res.send(scores);
-});
-
-// GetScores
 apiRouter.get('/loadGame', (req, res) => {
   let userName = req.query.userName
   res.send(loadGame(userName))
@@ -28,6 +23,8 @@ apiRouter.get('/loadGame', (req, res) => {
 // SubmitScore
 apiRouter.post('/saveGame', (req, res) => {
   game = saveGame(req.body);
+  console.log('Retrieved from saveGame:')
+  console.log(game)
   res.send(game);
 });
 
@@ -43,18 +40,27 @@ app.listen(port, () => {
 let savedGames = {}
 
 function saveGame(body) {
+  console.log("In saveGame")
   outputHistory = body.output
   userName = body.userName
+  console.log(outputHistory)
   savedGames[userName] = outputHistory
   return savedGames[userName]
 }
 
 function loadGame(userName) {
   console.log('loadGame hit with username ' + userName)
-  if (savedGames[userName] != {}) {
-    return savedGames[userName]
+  console.log(savedGames)
+  if (savedGames[userName] != null) {
+    console.log("Returning game")
+    return {
+      game: savedGames[userName]
+    }
   } else {
-    return null
+    console.log("No game found")
+    return {
+      game: 'none'
+    }
   }
 }
 

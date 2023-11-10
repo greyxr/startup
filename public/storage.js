@@ -59,7 +59,16 @@ async function loadGame() {
 async function saveGame() {
     // This will be hooked up the the database. Right now it's just storing and grabbing outputhistory from localstorage.
     //localStorage.setItem("outputHistory", outputHistory)
-    await fetch('/api/saveGame')
+    await fetch('/api/saveGame', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            output: localStorage.getItem("outputHistory"),
+            userName: localStorage.getItem("userName")
+        })
+    })
 }
 
 function loadUsersOnline() {
