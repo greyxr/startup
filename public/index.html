@@ -75,7 +75,7 @@ ____  ___                  ___.          .__   _____
             <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" onclick="saveGame(); if(gameStarted) { console.log('printed!'); printToOutput('\nGame saved.', true) }">Save</a>
+            <a class="nav-link" onclick="saveGame(); if(gameStarted) { printToOutput('\nGame saved.', true) }">Save</a>
           </li>
           <li class="nav-item">
             <!-- kind of an ugly solution, but it gets the visual effect -->
@@ -120,9 +120,9 @@ input.addEventListener("keypress", function(event) {
 async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/loadGame?userName=' + userName)
-    console.log(response)
+    //console.log(response)
     let currentGame = await response.json()
-    console.log(currentGame)
+    //console.log(currentGame)
     if (userName == 'guest' || currentGame.game == 'none') {
       console.log('Starting new game')
       document.getElementById('beginButton').style.display = "none"
@@ -132,7 +132,7 @@ async function toggleBeginButton() {
     }
     else {
       console.log('Retrieving saved game')
-      console.log(currentGame)
+      //console.log(currentGame)
       document.getElementById('beginButton').style.display = "none"
       output = document.getElementById('output')
       input = document.getElementById('input')

@@ -8,6 +8,12 @@ body {
     font-family:'Courier New', Courier, monospace;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 main {
     display: flex;
     font-size:large;
