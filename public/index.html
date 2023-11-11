@@ -143,6 +143,7 @@ async function toggleBeginButton() {
       toggleLoading() // So that the loading div starts in the correct state
       //await callGPT(currentGame, "Where am I?")
       //printToOutput(currentGame.game)
+      outputHistory = currentGame.game
       printCurrentGame(currentGame.game)
       input.style.display = "block"
       gameStarted = true
