@@ -11,9 +11,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="./runGame.js"></script>
+    <script src="./storage.js"></script>
 </head>
 <body>
     <header>
+<pre>
+____  ___                  ___.          .__   _____      
+\   \/  /___________  _____\_ |__ _____  |  |_/ ____\_ __ 
+ \     //  _ \_  __ \/     \| __ \\__  \ |  |\   __\  |  \
+ /     (  <_> )  | \/  Y Y  \ \_\ \/ __ \|  |_|  | |  |  /
+/___/\  \____/|__|  |__|_|  /___  (____  /____/__| |____/ 
+      \_/                 \/    \/     \/                 
+</pre>
     </header>
     <main class="switch-to-row">
       <section class="invSection">
@@ -66,8 +75,11 @@
             <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" onclick="saveGame(); if(gameStarted) { printToOutput('\nGame saved.', true) }">Save</a>
+          </li>
+          <li class="nav-item">
             <!-- kind of an ugly solution, but it gets the visual effect -->
-            <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">6 users online, currently logged in as guest</a>
+            <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true"><span id="usersOnline"></span> user(s) online, currently logged in as <span id="userNameSpan"></span></a>
           </li>
         </ul>
       </div>
@@ -105,10 +117,45 @@ input.addEventListener("keypress", function(event) {
   }
 });
 
-function toggleBeginButton() {
-    document.getElementById('beginButton').style.display = "none"
-    document.getElementById('seed').style.display = "block"
-    document.getElementById('seedP').style.display = "block"
-    document.getElementById('seed').value = ''
+async function toggleBeginButton() {
+    let userName = document.getElementById('userNameSpan').innerText
+    let response = await fetch('/api/loadGame?userName=' + userName)
+    //console.log(response)
+    let currentGame = await response.json()
+    //console.log(currentGame)
+    if (userName == 'guest' || currentGame.game == 'none') {
+      console.log('Starting new game')
+      document.getElementById('beginButton').style.display = "none"
+      document.getElementById('seed').style.display = "block"
+      document.getElementById('seedP').style.display = "block"
+      document.getElementById('seed').value = ''
+    }
+    else {
+      console.log('Retrieving saved game')
+      //console.log(currentGame)
+      document.getElementById('beginButton').style.display = "none"
+      output = document.getElementById('output')
+      input = document.getElementById('input')
+      output.style.display = "block"
+      document.getElementById('invDiv').style.display = "block"
+      seed.style.display = "none"
+      document.getElementById('seedP').style.display = "none"
+      toggleLoading() // So that the loading div starts in the correct state
+      //await callGPT(currentGame, "Where am I?")
+      //printToOutput(currentGame.game)
+      outputHistory = currentGame.game
+      printCurrentGame(currentGame.game)
+      input.style.display = "block"
+      gameStarted = true
+    }
+}
+
+function printCurrentGame(game) {
+  const outputDiv = document.getElementById("output");
+  // console.log("Current game is:" + game)
+  let newDiv = document.createElement('div')
+  newDiv.innerText = game + '\n'
+  outputDiv.appendChild(newDiv)
+  outputDiv.scrollTop = output.scrollHeight
 }
 </script>

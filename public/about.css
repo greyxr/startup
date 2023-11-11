@@ -8,6 +8,12 @@ body {
     font-family:'Courier New', Courier, monospace;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 main {
     display: flex;
     font-size:large;
@@ -24,20 +30,6 @@ footer {
 
 html {
     height: 100%;
-}
-
-.loginBox {
-    margin-top: 5px;
-    margin-bottom: 15px;
-}
-
-.bg-dark::placeholder {
-    color: rgb(136, 136, 136);
-}
-
-.loginLabel {
-    font-style: italic;
-    margin: 0px;
 }
 
 #wordContainer {

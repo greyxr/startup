@@ -10,12 +10,20 @@
     <link rel="icon" href="./images/icon1.ico"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./runGame.js"></script>
+    <script src="./storage.js"></script>
 </head>
 <body>
 <header>
+  <pre>
+    ____  ___                  ___.          .__   _____      
+    \   \/  /___________  _____\_ |__ _____  |  |_/ ____\_ __ 
+     \     //  _ \_  __ \/     \| __ \\__  \ |  |\   __\  |  \
+     /     (  <_> )  | \/  Y Y  \ \_\ \/ __ \|  |_|  | |  |  /
+    /___/\  \____/|__|  |__|_|  /___  (____  /____/__| |____/ 
+          \_/                 \/    \/     \/                 
+    </pre>
 </header>
 <main>
-  <!-- <button onclick="animateText()">Press me</button> -->
   <div id="wordContainer">
     <div id="outputDiv">
     </div>
@@ -49,7 +57,7 @@
             </li>
             <li class="nav-item">
               <!-- kind of an ugly solution, but it gets the visual effect -->
-              <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">6 users online, currently logged in as guest</a>
+              <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true"><span id="usersOnline"></span> users online, currently logged in as <span id="userNameSpan"></span></a>
             </li>
           </ul>
         </div>
@@ -60,29 +68,15 @@
 </html>
 
 <script>
-  
 addEventListener("load", (event) => {});
-
-onload = (event) => animateText();
-
-
-
-function animateText() {
 const sentence = `Xormbalfu is an experiment with using Chat-GPT to generate random
 text adventures. On the start screen, you will be prompted for a few words or a phrase.
 Chat-GPT will then use that to seed a playable text adventure. It takes in previous commands and
-responses so it has can keep a static adventure going, although only for 3000 words or so.
+responses so it has can keep a static adventure going, but only for 3000 words or so.
 OpenAI's API is still in development, so please be patient with load times. It might take up to 15
 seconds for a response.`;
-const words = sentence.split(' ');
-
-const outputDiv = document.getElementById('outputDiv');
-words.forEach((word, index) => {
-  const wordDiv = document.createElement('span');
-  wordDiv.textContent = word + ' ';
-  wordDiv.classList.add('word');
-  wordDiv.style.animationDelay = `${0.04 * (index + 1)}s`;
-  outputDiv.appendChild(wordDiv);
-});
+onload = (event) => {
+  onLoadFunctions()
+  animateText(sentence, 'outputDiv');
 }
 </script>

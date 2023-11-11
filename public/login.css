@@ -31,6 +31,12 @@ html {
     align-self: center;
 }
 
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .loginBox {
     margin-top: 5px;
     margin-bottom: 15px;

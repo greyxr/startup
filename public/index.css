@@ -1,0 +1,231 @@
+body {
+    color:rgb(223, 223, 223);
+    background-color:#212529;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-family:'Courier New', Courier, monospace;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    overflow:hidden;
+    max-height:fit-content;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.path-0{
+    animation:pathAnim-0 100s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes pathAnim-0{
+    0%{
+      d: path("M 0,600 C 0,600 0,300 0,300 C 86.15128205128207,331.0358974358974 172.30256410256413,362.07179487179485 256,373 C 339.69743589743587,383.92820512820515 420.9410256410256,374.7487179487179 503,333 C 585.0589743589744,291.2512820512821 667.9333333333334,216.93333333333334 738,238 C 808.0666666666666,259.06666666666666 865.3256410256411,375.51794871794874 945,405 C 1024.674358974359,434.48205128205126 1126.7641025641024,376.9948717948718 1213,345 C 1299.2358974358976,313.0051282051282 1369.6179487179488,306.50256410256407 1440,300 C 1440,300 1440,600 1440,600 Z");
+    }
+    25%{
+      d: path("M 0,600 C 0,600 0,300 0,300 C 70.56666666666666,283.925641025641 141.13333333333333,267.85128205128206 220,254 C 298.8666666666667,240.14871794871797 386.0333333333333,228.52051282051286 462,268 C 537.9666666666667,307.47948717948714 602.7333333333333,398.06666666666666 679,408 C 755.2666666666667,417.93333333333334 843.0333333333334,347.2128205128205 933,294 C 1022.9666666666666,240.7871794871795 1115.1333333333334,205.08205128205128 1200,209 C 1284.8666666666666,212.91794871794872 1362.4333333333334,256.4589743589744 1440,300 C 1440,300 1440,600 1440,600 Z");
+    }
+    50%{
+      d: path("M 0,600 C 0,600 0,300 0,300 C 94.66923076923078,341.50256410256407 189.33846153846156,383.0051282051282 263,348 C 336.66153846153844,312.9948717948718 389.3153846153846,201.48205128205132 460,190 C 530.6846153846154,178.51794871794868 619.4000000000001,267.06666666666666 706,272 C 792.5999999999999,276.93333333333334 877.0846153846153,198.25128205128206 957,219 C 1036.9153846153847,239.74871794871794 1112.2615384615385,359.9282051282051 1192,390 C 1271.7384615384615,420.0717948717949 1355.8692307692309,360.0358974358975 1440,300 C 1440,300 1440,600 1440,600 Z");
+    }
+    75%{
+      d: path("M 0,600 C 0,600 0,300 0,300 C 98.38461538461539,350.5820512820513 196.76923076923077,401.16410256410256 268,373 C 339.2307692307692,344.83589743589744 383.30769230769226,237.92564102564103 456,219 C 528.6923076923077,200.07435897435897 629.9999999999999,269.1333333333333 725,267 C 820.0000000000001,264.8666666666667 908.6923076923076,191.54102564102564 981,215 C 1053.3076923076924,238.45897435897436 1109.2307692307693,358.70256410256405 1183,389 C 1256.7692307692307,419.29743589743595 1348.3846153846152,359.64871794871794 1440,300 C 1440,300 1440,600 1440,600 Z");
+    }
+    100%{
+      d: path("M 0,600 C 0,600 0,300 0,300 C 86.15128205128207,331.0358974358974 172.30256410256413,362.07179487179485 256,373 C 339.69743589743587,383.92820512820515 420.9410256410256,374.7487179487179 503,333 C 585.0589743589744,291.2512820512821 667.9333333333334,216.93333333333334 738,238 C 808.0666666666666,259.06666666666666 865.3256410256411,375.51794871794874 945,405 C 1024.674358974359,434.48205128205126 1126.7641025641024,376.9948717948718 1213,345 C 1299.2358974358976,313.0051282051282 1369.6179487179488,306.50256410256407 1440,300 C 1440,300 1440,600 1440,600 Z");
+    }
+  }
+
+.invSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+}
+
+#invDiv {
+    display: none;
+    height: auto;
+    width: 80%;
+    margin-top: 5%;
+}
+
+.gameSection {
+    /* outline:solid; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.emptySection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#beginButton {
+    height: 50px;
+    width: 100px;
+    margin: 20px;
+}
+
+footer {
+    flex: 0 50px;
+}
+
+html {
+    height: 100%;
+}
+
+#seed {
+    margin: 10px;
+    display: none;
+    width: auto;
+}
+
+#seedP {
+    font-style: italic;
+    margin: none;
+    display: none;
+}
+
+#output {
+    height: 80%;
+    max-height: 600px;
+    margin: 5%;
+    color: white;
+    display: none;
+    overflow: auto;
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .word {
+    opacity: 0; /* Start with 0 opacity */
+    animation: fadeIn 0.5s forwards; /* Use the fadeIn animation */
+  }
+
+#input {
+    margin: 20px;
+    margin-top:10%;
+    display: none;
+    width: 300px;
+    align-self: start;
+}
+
+.bg-dark::placeholder {
+    color: rgb(136, 136, 136);
+}
+
+.inv-item {
+    display: none;
+    margin: 20px;
+    margin-left: 0px;
+    display: flex;
+    flex-direction: row;
+    align-content:center;
+    /* outline: solid; */
+}
+
+.action-div {
+    align-self:center;
+    /* outline:solid; */
+    display: flex;
+    align-content: center;
+}
+
+.item-name {
+    margin: 10px;
+    /* outline:solid; */
+  }
+
+.action-button {
+    margin-right: 10px;
+    background-color: #212529;
+    color: white
+  }
+
+#loading {
+    display: none;
+    position: absolute;
+    bottom: 21.5%;
+}
+
+@media (max-width: 767px) {
+    .hide-on-small-screen {
+      display: none;
+    }
+}
+
+@media (max-width: 1290px) {
+    .switch-to-row {
+        flex-direction: column-reverse;
+    }
+    #input {
+        width: auto;
+    }
+    #seed {
+        width: auto;
+    }
+  }
+
+
+/* Loading effect */
+
+.loader {
+    overflow: hidden;
+    background-color: rgba(33, 37, 41, 0);
+    height:auto;
+    width: auto;
+    display: block;
+    align-items: center;
+    align-content: center; 
+    justify-content: center;  
+    z-index: 100000;
+}
+  
+.loader__element {
+    border-radius: 100%;
+    border: 5px solid rgb(223,223,223);
+    margin: 10px;
+}  
+
+.loader__element:nth-child(1) {
+    animation: preloader .6s ease-in-out alternate infinite;
+}
+
+.loader__element:nth-child(2) {
+    animation: preloader .6s ease-in-out alternate .2s infinite;
+}
+  
+.loader__element:nth-child(3) {
+    animation: preloader .6s ease-in-out alternate .4s infinite;
+}
+  
+@keyframes preloader {
+    100% { transform: scale(2); }
+}
+  

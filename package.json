@@ -1,0 +1,14 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "## Xormbalfu -- a simple text adventure Website: [startup.xormbalfu.click](startup.xormbalfu.click)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
