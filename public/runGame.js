@@ -51,24 +51,6 @@ function toggleLoading() {
     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
 }
 
-function printInventory() {
-    let inventoryContainer = document.getElementById('invDiv')
-    inventoryContainer.innerHTML = 'Inventory ------------'
-    if (inventory.length != 0) {
-        console.log('stuff')
-    for (item of inventory) {
-        const itemDiv = document.createElement('div')
-        itemDiv.classList.add('inv-item')
-
-        const itemName = document.createElement('span')
-        itemName.classList.add('item-name')
-        itemName.innerText = '--' + item
-        itemDiv.appendChild(itemName)
-        inventoryContainer.appendChild(itemDiv)
-}
-}
-}
-
 function printToOutput(outputText, displayOnly = false) {
     let output = document.getElementById('output')
     // output.innerText += outputText + '\n'
@@ -76,8 +58,6 @@ function printToOutput(outputText, displayOnly = false) {
     if (!displayOnly) {
         outputHistory += outputText
     }
-    // invIndex = outputText.indexOf('[')
-    // if (invIndex != 0 && invIndex != -1) outputText = (outputText.slice(0,invIndex) + '\n')
     animateText(outputText, 'output')
     output.scrollTop = output.scrollHeight
 }

@@ -59,6 +59,7 @@ function loadGame(userName) {
   } else {
     console.log("No game found")
     return {
+      // Returning this because returning null or an empty object caused problems for the response
       game: 'none'
     }
   }
