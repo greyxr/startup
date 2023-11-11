@@ -14,13 +14,13 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// GetScores
+// loadGame
 apiRouter.get('/loadGame', (req, res) => {
   let userName = req.query.userName
   res.send(loadGame(userName))
 });
 
-// SubmitScore
+// savegame
 apiRouter.post('/saveGame', (req, res) => {
   game = saveGame(req.body);
   console.log('Retrieved from saveGame:')
