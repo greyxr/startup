@@ -17,19 +17,27 @@ app.use(`/api`, apiRouter);
 
 // loadGame
 apiRouter.get('/loadGame', async (req, res) => {
-  console.log('In loadGame')
+  // console.log('In loadGame')
   let userName = req.query.userName
   let game = await database.loadGameFromDB(userName)
-  console.log("Results:")
-  console.log(game)
+  // console.log("Results:")
+  // console.log(game)
   res.send(game)
 });
 
 // savegame
 apiRouter.post('/saveGame', async (req, res) => {
   //game = saveGame(req.body);
-  console.log('Retrieved from saveGame:')
+  // console.log('Retrieved from saveGame:')
   let results = await database.saveGame(req.body)
+  res.send(results);
+});
+
+// restart
+apiRouter.delete('/restart', async (req, res) => {
+  console.log("In restart route")
+  let results = await database.deleteGame(req.query.userName)
+  console.log(results)
   res.send(results);
 });
 

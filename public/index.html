@@ -78,6 +78,9 @@ ____  ___                  ___.          .__   _____
             <a class="nav-link" onclick="saveGame(); if(gameStarted) { printToOutput('\nGame saved.', true) }">Save</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" onclick="if (gameStarted) { restartGame() } else { console.log('No game found to restart')}">Restart</a>
+          </li>
+          <li class="nav-item">
             <!-- kind of an ugly solution, but it gets the visual effect -->
             <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true"><span id="usersOnline"></span> user(s) online, currently logged in as <span id="userNameSpan"></span></a>
           </li>
@@ -116,6 +119,15 @@ input.addEventListener("keypress", function(event) {
     document.getElementById("inputButton").click();
   }
 });
+
+async function restartGame() {
+  console.log("In restart game")
+  let userName = document.getElementById('userNameSpan').innerText
+  let response = await fetch('/api/restart?userName=' + userName, {
+    method: 'DELETE'
+  })
+  location.reload()
+}
 
 async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText

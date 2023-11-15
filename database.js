@@ -58,7 +58,7 @@ async function addScore(score) {
     let cursor = savedGamesCollection.find(query)
     let results = await cursor.toArray()
     console.log(results)
-    if (results != null) {
+    if (results[0] != null) {
       console.log("Returning game")
       console.log(results[0])
       return results[0]
@@ -71,4 +71,11 @@ async function addScore(score) {
     }
 }
 
-module.exports = { saveGame, loadGameFromDB };
+async function deleteGame(userName) {
+    console.log('In delete game with username ' + userName)
+    const query = { "userName": userName }
+    let results = await savedGamesCollection.deleteOne(query)
+    return results
+}
+
+module.exports = { saveGame, loadGameFromDB, deleteGame };
