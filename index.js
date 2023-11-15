@@ -1,4 +1,5 @@
 const express = require('express');
+const database = require('./database.js')
 const app = express();
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -15,17 +16,21 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // loadGame
-apiRouter.get('/loadGame', (req, res) => {
+apiRouter.get('/loadGame', async (req, res) => {
+  console.log('In loadGame')
   let userName = req.query.userName
-  res.send(loadGame(userName))
+  let game = await database.loadGameFromDB(userName)
+  console.log("Results:")
+  console.log(game)
+  res.send(game)
 });
 
 // savegame
-apiRouter.post('/saveGame', (req, res) => {
-  game = saveGame(req.body);
+apiRouter.post('/saveGame', async (req, res) => {
+  //game = saveGame(req.body);
   console.log('Retrieved from saveGame:')
-  console.log(game)
-  res.send(game);
+  let results = await database.saveGame(req.body)
+  res.send(results);
 });
 
 // Return the application's default page if the path is unknown
@@ -36,31 +41,3 @@ app.use((_req, res) => {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-
-let savedGames = {}
-
-function saveGame(body) {
-  console.log("In saveGame")
-  outputHistory = body.output
-  userName = body.userName
-  console.log(outputHistory)
-  savedGames[userName] = outputHistory
-  return savedGames[userName]
-}
-
-function loadGame(userName) {
-  console.log('loadGame hit with username ' + userName)
-  console.log(savedGames)
-  if (savedGames[userName] != null) {
-    console.log("Returning game")
-    return {
-      game: savedGames[userName]
-    }
-  } else {
-    console.log("No game found")
-    return {
-      // Returning this because returning null or an empty object caused problems for the response
-      game: 'none'
-    }
-  }
-}

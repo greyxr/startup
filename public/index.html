@@ -123,7 +123,7 @@ async function toggleBeginButton() {
     //console.log(response)
     let currentGame = await response.json()
     //console.log(currentGame)
-    if (userName == 'guest' || currentGame.game == 'none') {
+    if (userName == 'guest' || currentGame.gameData == 'none') {
       console.log('Starting new game')
       document.getElementById('beginButton').style.display = "none"
       document.getElementById('seed').style.display = "block"
@@ -143,8 +143,8 @@ async function toggleBeginButton() {
       toggleLoading() // So that the loading div starts in the correct state
       //await callGPT(currentGame, "Where am I?")
       //printToOutput(currentGame.game)
-      outputHistory = currentGame.game
-      printCurrentGame(currentGame.game)
+      outputHistory = currentGame.gameData
+      printCurrentGame(currentGame.gameData)
       input.style.display = "block"
       gameStarted = true
     }

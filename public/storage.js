@@ -37,7 +37,7 @@ async function loadGame() {
     // support, which is why this is commented out.
     // console.log('loadGame hit!')
     // let currentGame = localStorage.getItem("outputHistory")
-    //let currentGame = await fetch('/api/getGame')
+    // let currentGame = await fetch('/api/loadGame?userName=dave')
     // if (currentGame != null) {
     //     console.log('game found')
     //     output = document.getElementById('output')
@@ -82,7 +82,8 @@ function getUsersOnline() {
 }
 
 function onLoadFunctions() {
-    //loadGame()
+    loadGame()
+    console.log('On load')
     loadUsername()
     loadUsersOnline()
 }
