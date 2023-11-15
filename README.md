@@ -77,9 +77,9 @@ Xormbalfu will run off of Javascript in the browser.
 - <b> Other </b> - I removed the inventory printing functionality from the game. Because I'm trying to parse the player's inventory from chatGPT's response, it's easy for the system to be accidentally broken. Not only that, but because of the way the prompt needs to be to actually parse the inventory, it keeps affecting the way the AI responds to requests, leading to nonsense responses. I can't really request the inventory in a separate request to the API, as that would double the already considerable response time from about 10 seconds to about 20 seconds. If I could redo the project, I'd figure out a different way to keep track of the player's inventory (or spend more money for GPT-4), but for now, since printing the player's inventory is more of a neat side thing, I've removed it. I did add a header, though.
 
 ## Database Deliverable
-- <b> MongoDB Atlas database created - I have created a MongoDB database for the website.
-- <b> Backend endpoints for manipulating application data - I changed the loadGame and saveGame endpoints on the backend to call database functions that load and save games from the database. The loadGame database function calls a query on the database using the user's username, and the saveGame function inserts the user's game data (or replaces it if a game already exists for the user). I also added a restart button to the application that will delete a user's game and refresh the page.
-- <b> Stores application data in MongoDB - The saveGame function saves the user's game information in MongoDB instead of on the server directly.
+- <b> MongoDB Atlas database created </b> - I have created a MongoDB database for the website.
+- <b> Backend endpoints for manipulating application data </b> - I changed the loadGame and saveGame endpoints on the backend to call database functions that load and save games from the database. The loadGame database function calls a query on the database using the user's username, and the saveGame function inserts the user's game data (or replaces it if a game already exists for the user). I also added a restart button to the application that will delete a user's game and refresh the page.
+- <b> Stores application data in MongoDB </b> - The saveGame function saves the user's game information in MongoDB instead of on the server directly.
 
 
 
