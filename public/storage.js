@@ -1,8 +1,11 @@
+let loggedIn = false
+
 async function login() {
     saveUsername()
     // asynchronous login stuff
     await new Promise((resolve, reject) => {
         setTimeout(() => {
+            loggedIn = true
             resolve('success')
         }, 2000)
     })
@@ -18,6 +21,9 @@ function saveUsername() {
 function getUsername() {
         let userName = localStorage.getItem("userName")
         if (userName == null) userName = 'guest'
+        else {
+            loggedIn = true
+        }
         return userName
   }
 
@@ -30,35 +36,7 @@ function loadUsername() {
 addEventListener("load", (event) => {});
 onload = (event) => onLoadFunctions();
 
-async function loadGame() {
-    //let currentGame
-    // This will be hooked up the the database. Right now it's just storing and grabbing outputhistory from localstorage.
-    // I was messing around with keeping the current game in localStorage, but I'm going to wait until I have database
-    // support, which is why this is commented out.
-    // console.log('loadGame hit!')
-    // let currentGame = localStorage.getItem("outputHistory")
-    // let currentGame = await fetch('/api/loadGame?userName=dave')
-    // if (currentGame != null) {
-    //     console.log('game found')
-    //     output = document.getElementById('output')
-    //     input = document.getElementById('input')
-    //     document.getElementById('beginButton').style.display = "none"
-    //     output.style.display = "block"
-    //     document.getElementById('invDiv').style.display = "block"
-    //     let seed = document.getElementById('seed')
-    //     seed.style.display = "none"
-    //     document.getElementById('seedP').style.display = "none"
-    //     outputHistory = currentGame
-    //     input.style.display = "block"
-    //     printInventory()
-    //     animateText('Game loaded.', 'output')
-    //     handleInput()
-    // }
-}
-
 async function saveGame() {
-    // This will be hooked up the the database. Right now it's just storing and grabbing outputhistory from localstorage.
-    //localStorage.setItem("outputHistory", outputHistory)
     await fetch('/api/saveGame', {
         method: "POST",
         headers: {
@@ -82,7 +60,6 @@ function getUsersOnline() {
 }
 
 function onLoadFunctions() {
-    loadGame()
     console.log('On load')
     loadUsername()
     loadUsersOnline()
