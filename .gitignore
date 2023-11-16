@@ -2,3 +2,5 @@ config.json
 node_modules/
 dist/
 dbConfig.json
+hw.c
+hw.s

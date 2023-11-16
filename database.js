@@ -15,20 +15,27 @@ const savedGamesCollection = db.collection('savedGames');
   process.exit(1);
 });
 
-async function addScore(score) {
-    const result = await scoreCollection.insertOne(score);
-    return result;
-  }
-  
-  function getHighScores() {
-    const query = { score: { $gt: 0, $lt: 900 } };
-    const options = {
-      sort: { score: -1 },
-      limit: 10,
-    };
-    const cursor = scoreCollection.find(query, options);
-    return cursor.toArray();
-  }
+function getUser(email) {
+  return userCollection.findOne({ email: email });
+}
+
+function getUserByToken(token) {
+  return userCollection.findOne({ token: token });
+}
+
+async function createUser(email, password) {
+  // Hash the password before we insert it into the database
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const user = {
+    email: email,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+  await userCollection.insertOne(user);
+
+  return user;
+}
 
   async function saveGame(body) {
     console.log("In saveGame")
