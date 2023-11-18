@@ -1,10 +1,13 @@
-const config = require('./dbConfig.json');
 const { MongoClient } = require('mongodb');
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+const config = require('./dbConfig.json');
 
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 const db = client.db('xormbalfu');
 const savedGamesCollection = db.collection('savedGames');
+const userCollection = db.collection('userTable');
 //const loginCollection = db.collection('loginInfo');
 
 (async function testConnection() {
@@ -15,20 +18,20 @@ const savedGamesCollection = db.collection('savedGames');
   process.exit(1);
 });
 
-function getUser(email) {
-  return userCollection.findOne({ email: email });
+function getUser(userName) {
+  return userCollection.findOne({ userName: userName });
 }
 
 function getUserByToken(token) {
   return userCollection.findOne({ token: token });
 }
 
-async function createUser(email, password) {
+async function createUser(userName, password) {
   // Hash the password before we insert it into the database
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = {
-    email: email,
+    userName: userName,
     password: passwordHash,
     token: uuid.v4(),
   };
@@ -85,4 +88,4 @@ async function deleteGame(userName) {
     return results
 }
 
-module.exports = { saveGame, loadGameFromDB, deleteGame };
+module.exports = { getUser, getUserByToken, createUser, saveGame, loadGameFromDB, deleteGame };

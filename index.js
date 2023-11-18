@@ -4,6 +4,8 @@ const express = require('express');
 const database = require('./database.js')
 const app = express();
 
+const authCookieName = 'token';
+
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -19,12 +21,16 @@ app.use(express.static('public'));
 // Trust headers that are forwarded from the proxy so we can determine IP addresses
 app.set('trust proxy', true);
 
+// Router for service endpoints
+var apiRouter = express.Router();
+app.use(`/api`, apiRouter);
+
 // CreateAuth token for a new user
 apiRouter.post('/auth/create', async (req, res) => {
-  if (await DB.getUser(req.body.email)) {
+  if (await database.getUser(req.body.userName)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await DB.createUser(req.body.email, req.body.password);
+    const user = await database.createUser(req.body.userName, req.body.password);
 
     // Set the cookie
     setAuthCookie(res, user.token);
@@ -37,7 +43,7 @@ apiRouter.post('/auth/create', async (req, res) => {
 
 // GetAuth token for the provided credentials
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await DB.getUser(req.body.email);
+  const user = await database.getUser(req.body.userName);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       setAuthCookie(res, user.token);
@@ -55,11 +61,11 @@ apiRouter.delete('/auth/logout', (_req, res) => {
 });
 
 // GetUser returns information about a user
-apiRouter.get('/user/:email', async (req, res) => {
-  const user = await DB.getUser(req.params.email);
+apiRouter.get('/user/:userName', async (req, res) => {
+  const user = await database.getUser(req.params.userName);
   if (user) {
     const token = req?.cookies.token;
-    res.send({ email: user.email, authenticated: token === user.token });
+    res.send({ userName: user.userName, authenticated: token === user.token });
     return;
   }
   res.status(404).send({ msg: 'Unknown' });
@@ -71,7 +77,7 @@ apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   authToken = req.cookies[authCookieName];
-  const user = await DB.getUserByToken(authToken);
+  const user = await database.getUserByToken(authToken);
   if (user) {
     next();
   } else {
@@ -79,12 +85,8 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
-// Router for service endpoints
-var apiRouter = express.Router();
-app.use(`/api`, apiRouter);
-
 // loadGame
-apiRouter.get('/loadGame', async (req, res) => {
+secureApiRouter.get('/loadGame', async (req, res) => {
   // console.log('In loadGame')
   let userName = req.query.userName
   let game = await database.loadGameFromDB(userName)
@@ -94,7 +96,7 @@ apiRouter.get('/loadGame', async (req, res) => {
 });
 
 // savegame
-apiRouter.post('/saveGame', async (req, res) => {
+secureApiRouter.post('/saveGame', async (req, res) => {
   //game = saveGame(req.body);
   // console.log('Retrieved from saveGame:')
   let results = await database.saveGame(req.body)
@@ -102,7 +104,7 @@ apiRouter.post('/saveGame', async (req, res) => {
 });
 
 // restart
-apiRouter.delete('/restart', async (req, res) => {
+secureApiRouter.delete('/restart', async (req, res) => {
   console.log("In restart route")
   let results = await database.deleteGame(req.query.userName)
   console.log(results)
@@ -113,6 +115,15 @@ apiRouter.delete('/restart', async (req, res) => {
 app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
+
+// setAuthCookie in the HTTP response
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

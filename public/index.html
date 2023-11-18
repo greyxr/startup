@@ -75,7 +75,7 @@ ____  ___                  ___.          .__   _____
             <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" onclick="if(loggedIn) { saveGame(); if(gameStarted) { printToOutput('\nGame saved.', true) } }">Save</a>
+            <a class="nav-link" onclick="handleSave()">Save</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" onclick="if (gameStarted) { restartGame() } else { console.log('No game found to restart')}">Restart</a>
@@ -127,6 +127,17 @@ async function restartGame() {
     method: 'DELETE'
   })
   location.reload()
+}
+
+async function handleSave() {
+  if(loggedIn) {
+    saveGame();
+    if(gameStarted) {
+      printToOutput('\nGame saved.', true)
+    }
+  } else {
+    window.location.href = 'login.html';
+  }
 }
 
 async function toggleBeginButton() {

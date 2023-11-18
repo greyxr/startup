@@ -27,8 +27,9 @@
       <p class="loginLabel">username</p>
       <input class="form-control bg-dark text-white loginBox" placeholder="username" id="username">
       <p class="loginLabel">password</p>
-      <input class="form-control bg-dark text-white loginBox" type="password" placeholder="password">
-      <div><button type="button" class="rounded" style="background-color: #212529; color: white; margin-right: 5px">Register</button><button type="button" class="rounded" style="background-color: #212529; color: white; margin-left: 5px" onclick="login()">Login</button></div>
+      <input class="form-control bg-dark text-white loginBox" type="password" placeholder="password" id="password">
+      <div><button type="button" class="rounded" style="background-color: #212529; color: white; margin-right: 5px" onclick="createUser()">Register</button><button type="button" class="rounded" style="background-color: #212529; color: white; margin-left: 5px" onclick="login()">Login</button></div>
+      <div id="loginErrorMessage" style="color:darkred; margin-top:20px"></div>
     </section>
 </main>
 
