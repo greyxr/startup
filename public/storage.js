@@ -38,6 +38,14 @@ async function loginUser() {
     }
   }
 
+  function logout() {
+    loggedIn = false
+    localStorage.removeItem('userName');
+    fetch(`/api/auth/logout`, {
+      method: 'delete',
+    }).then(() => (window.location.href = '/login.html'));
+  }
+
 function saveUsername() {
     const username = document.querySelector("#username");
     localStorage.setItem("userName", username.value);
@@ -52,15 +60,16 @@ async function getUsername() {
         }
          else {
           const results = await fetch (`/api/user/${userName}`)
-          if (results.status == 401 || results.status == 404) {
+          if (results.status == 200) {
+            let body = await results.json()
+            if (body.authenticated === true) loggedIn = true
+            return userName
+          }
+          else {
             userName = 'guest'
             return userName
           }
-          else if (results.status == 200) {
-            loggedIn = true
-          }
          }
-        return userName
   }
 
 async function loadUsername() {
@@ -94,10 +103,25 @@ function getUsersOnline() {
     return Math.floor(Math.random() * 10) + 1
 }
 
-function onLoadFunctions() {
-    console.log('On load')
-    loadUsername()
+async function setLoggedIn() {
+  let results = await fetch(`/api/`)
+}
+
+function setLoginButton() {
+  let loginButton = document.getElementById('loginButton')
+  let logoutButton = document.getElementById('logoutButton')
+  let loginStyle = loggedIn ? 'none' : 'block'
+  let logoutStyle = loggedIn ? 'block' : 'none'
+  
+  // Show or hide login/out buttons as appropriate
+  loginButton.style.display = loginStyle
+  logoutButton.style.display = logoutStyle
+}
+
+async function onLoadFunctions() {
+    await loadUsername()
     loadUsersOnline()
+    setLoginButton()
 }
 
 // This simulates the websocket data for now. Every minute the number of users updates.
