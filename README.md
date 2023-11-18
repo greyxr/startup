@@ -81,6 +81,13 @@ Xormbalfu will run off of Javascript in the browser.
 - <b> Backend endpoints for manipulating application data </b> - I changed the loadGame and saveGame endpoints on the backend to call database functions that load and save games from the database. The loadGame database function calls a query on the database using the user's username, and the saveGame function inserts the user's game data (or replaces it if a game already exists for the user). I also added a restart button to the application that will delete a user's game and refresh the page.
 - <b> Stores application data in MongoDB </b> - The saveGame function saves the user's game information in MongoDB instead of on the server directly.
 
+## Login Deliverable
+- <b> Supports new user registration </b> - You can use the login screen to register a new account.
+- <b> Supports existing user authentication </b> - You can use the login screen to login to an existing account.
+- <b> Stores and retrieves credentials in MongoDB </b> - A collection in mongodb holds the user's authentication information.
+- <b> Restricts application functionality based upon authentication </b> - You can't access games for other users, and you can't save a game without being logged in.
+
+
 
 
 
