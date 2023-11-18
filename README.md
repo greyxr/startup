@@ -85,7 +85,7 @@ Xormbalfu will run off of Javascript in the browser.
 - <b> Supports new user registration </b> - You can use the login screen to register a new account.
 - <b> Supports existing user authentication </b> - You can use the login screen to login to an existing account.
 - <b> Stores and retrieves credentials in MongoDB </b> - A collection in mongodb holds the user's authentication information.
-- <b> Restricts application functionality based upon authentication </b> - You can't access games for other users, and you can't save a game without being logged in.
+- <b> Restricts application functionality based upon authentication </b> - You can't access games for other users, and you can't save a game without being logged in. The user can change their username in local storage, but they won't be able to hit any of the secured endpoints without a valid token.
 
 
 
