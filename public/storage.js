@@ -13,7 +13,6 @@ async function loginUser() {
   }
   
   async function loginOrCreate(endpoint) {
-    console.log('in login')
     const userName = document.querySelector('#username')?.value;
     const password = document.querySelector('#password')?.value;
     if (userName == '' || password == '') {
@@ -94,7 +93,6 @@ async function saveGame() {
 }
 
 function loadUsersOnline() {
-    console.log('loadUsersOnline hit!')
     let usersOnlineSpan = document.getElementById('usersOnline')
     usersOnlineSpan.innerText = getUsersOnline()
 }
