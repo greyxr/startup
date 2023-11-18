@@ -126,7 +126,7 @@ input.addEventListener("keypress", function(event) {
 async function restartGame() {
   console.log("In restart game")
   let userName = document.getElementById('userNameSpan').innerText
-  let response = await fetch('/api/restart?userName=' + userName, {
+  let response = await fetch('/api/auth/restart?userName=' + userName, {
     method: 'DELETE'
   })
   location.reload()
@@ -146,6 +146,10 @@ async function handleSave() {
 async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/loadGame?userName=' + userName)
+    console.log(response.status)
+    if (response.status === 401) {
+      window.location.href = 'login.html'
+    }
     //console.log(response)
     let currentGame = await response.json()
     //console.log(currentGame)

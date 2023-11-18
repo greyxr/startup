@@ -77,16 +77,18 @@ apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
   authToken = req.cookies[authCookieName];
+  console.log('In secureApiRouter')
   const user = await database.getUserByToken(authToken);
   if (user) {
     next();
   } else {
+    console.log('denied')
     res.status(401).send({ msg: 'Unauthorized' });
   }
 });
 
 // loadGame
-secureApiRouter.get('/loadGame', async (req, res) => {
+secureApiRouter.get('/auth/loadGame', async (req, res) => {
   // console.log('In loadGame')
   let userName = req.query.userName
   let game = await database.loadGameFromDB(userName)
@@ -96,7 +98,7 @@ secureApiRouter.get('/loadGame', async (req, res) => {
 });
 
 // savegame
-secureApiRouter.post('/saveGame', async (req, res) => {
+secureApiRouter.post('/auth/saveGame', async (req, res) => {
   //game = saveGame(req.body);
   // console.log('Retrieved from saveGame:')
   let results = await database.saveGame(req.body)
@@ -104,7 +106,7 @@ secureApiRouter.post('/saveGame', async (req, res) => {
 });
 
 // restart
-secureApiRouter.delete('/restart', async (req, res) => {
+secureApiRouter.delete('/auth/restart', async (req, res) => {
   console.log("In restart route")
   let results = await database.deleteGame(req.query.userName)
   console.log(results)

@@ -81,7 +81,7 @@ addEventListener("load", (event) => {});
 onload = (event) => onLoadFunctions();
 
 async function saveGame() {
-    await fetch('/api/saveGame', {
+    await fetch('/api/auth/saveGame', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -101,10 +101,6 @@ function loadUsersOnline() {
 
 function getUsersOnline() {
     return Math.floor(Math.random() * 10) + 1
-}
-
-async function setLoggedIn() {
-  let results = await fetch(`/api/`)
 }
 
 function setLoginButton() {
