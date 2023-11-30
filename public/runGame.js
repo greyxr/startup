@@ -149,32 +149,40 @@ function animateText(sentence, outputElement, delay = 0.04) {
     outputDiv.appendChild(document.createElement('br'))
     }
 
-async function configureWebSocket() {
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
-    this.socket.onopen = (event) => {
-        this.displayMsg('system', 'game', 'connected');
-    };
-    this.socket.onclose = (event) => {
-        this.displayMsg('system', 'game', 'disconnected');
-    };
-    this.socket.onmessage = async (event) => {
-      const msg = JSON.parse(await event.data.text());
-      if (msg.type === GameEndEvent) {
-        this.displayMsg('player', msg.from, `scored ${msg.value.score}`);
-      } else if (msg.type === GameStartEvent) {
-        this.displayMsg('player', msg.from, `started a new game`);
-      }
-    };
+  class webSocket {
+    socket;
+  constructor() {
+    this.configureWebSocket()
   }
+  configureWebSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
+    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    this.socket.onopen = (event) => {
+      this.displayMsg('system', 'game', 'connected')
+    }
+    this.socket.onclose = (event) => {
+      this.displayMsg('system', 'game', 'disconnected')
+    }
+    this.socket.onmessage = async (event) => {
+      console.log("message received")
+      const msg = JSON.parse(await event.data.text())
+      if (msg.type === 'GameStartEvent') {
+        this.displayMsg('player', msg.from, `scored`)
+      } else if (msg.type === 'GameLoadEvent') {
+        this.displayMsg('player', msg.from, `started a new game`)
+      }
+    }
+}
 
-  function displayMsg(cls, from, msg) {
-    const chatText = document.querySelector('#player-messages');
+  displayMsg(cls, from, msg) {
+    const chatText = document.getElementById('websocketDisplay')
+    // const newMessage = document.createElement('div')
+    // newMessage.innerHTML = 
     chatText.innerHTML =
       `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
   }
 
-  async function broadcastEvent(from, type, value) {
+  broadcastEvent(from, type, value) {
     const event = {
       from: from,
       type: type,
@@ -182,3 +190,4 @@ async function configureWebSocket() {
     };
     this.socket.send(JSON.stringify(event));
   }
+}

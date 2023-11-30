@@ -47,7 +47,34 @@ ____  ___                  ___.          .__   _____
 
 
       </section>
-      <section class="emptySection hide-on-small-screen"></section>
+      <section class="emptySection hide-on-small-screen">
+      <div id="websocketDisplay" style="outline:solid; width:80%; height:60%; overflow:scroll; display:flex; flex-direction:column">
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      <div>text</div>
+      </div>
+    </section>
     </main>
     <footer>
       <hr/>
@@ -142,8 +169,9 @@ async function handleSave() {
     window.location.href = 'login.html';
   }
 }
-
+const newSocket = new webSocket();
 async function toggleBeginButton() {
+    newSocket.broadcastEvent(await getUsername(), 'GameStartEvent', {});
     console.log('hit')
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/auth/loadGame?userName=' + userName)
@@ -152,7 +180,6 @@ async function toggleBeginButton() {
       window.location.href = 'login.html'
     }
     console.log(response)
-    console.log('here0!')
     let currentGame = await response.json()
     console.log(currentGame)
     console.log('here!')
