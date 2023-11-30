@@ -144,15 +144,18 @@ async function handleSave() {
 }
 
 async function toggleBeginButton() {
+    console.log('hit')
     let userName = document.getElementById('userNameSpan').innerText
-    let response = await fetch('/api/loadGame?userName=' + userName)
+    let response = await fetch('/api/auth/loadGame?userName=' + userName)
     console.log(response.status)
     if (response.status === 401) {
       window.location.href = 'login.html'
     }
-    //console.log(response)
+    console.log(response)
+    console.log('here0!')
     let currentGame = await response.json()
-    //console.log(currentGame)
+    console.log(currentGame)
+    console.log('here!')
     if (userName == 'guest' || currentGame.gameData == 'none') {
       console.log('Starting new game')
       document.getElementById('beginButton').style.display = "none"

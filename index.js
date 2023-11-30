@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const database = require('./database.js')
 const app = express();
+const { peerProxy } = require('./peerProxy.js');
 
 const authCookieName = 'token';
 
@@ -87,11 +88,11 @@ secureApiRouter.use(async (req, res, next) => {
 
 // loadGame
 secureApiRouter.get('/auth/loadGame', async (req, res) => {
-  // console.log('In loadGame')
   let userName = req.query.userName
+  console.log(userName)
   let game = await database.loadGameFromDB(userName)
-  // console.log("Results:")
-  // console.log(game)
+  console.log("Results:")
+  console.log(game)
   res.send(game)
 });
 
@@ -118,6 +119,7 @@ app.use((_req, res) => {
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
+  console.log('in setAuthCookie')
   res.cookie(authCookieName, authToken, {
     secure: true,
     httpOnly: true,
