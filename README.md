@@ -87,6 +87,13 @@ Xormbalfu will run off of Javascript in the browser.
 - <b> Stores and retrieves credentials in MongoDB </b> - A collection in mongodb holds the user's authentication information.
 - <b> Restricts application functionality based upon authentication </b> - You can't access games for other users, and you can't save a game without being logged in. The user can change their username in local storage, but they won't be able to hit any of the secured endpoints without a valid token.
 
+## Websocket Deliverable
+- <b> Backend listens for WebSocket connection </b> - Done
+- <b> Frontend makes WebSocket connection </b> - Done
+- <b> Data sent over WebSocket connection </b> - An event is broadcast whenever a player begins a new game or loads a saved game.
+- <b> WebSocket data displayed in the application interface </b> The events are displayed on the right hand side of the screen in real time (and they're animated!)
+
+
 
 
 
