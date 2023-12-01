@@ -48,31 +48,7 @@ ____  ___                  ___.          .__   _____
 
       </section>
       <section class="emptySection hide-on-small-screen">
-      <div id="websocketDisplay" style="outline:solid; width:80%; height:60%; overflow:scroll; display:flex; flex-direction:column">
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
-      <div>text</div>
+      <div id="websocketDisplay" style="outline:solid; width:80%; height:60%; overflow:scroll;">
       </div>
     </section>
     </main>
@@ -169,10 +145,8 @@ async function handleSave() {
     window.location.href = 'login.html';
   }
 }
-const newSocket = new webSocket();
+
 async function toggleBeginButton() {
-    newSocket.broadcastEvent(await getUsername(), 'GameStartEvent', {});
-    console.log('hit')
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/auth/loadGame?userName=' + userName)
     console.log(response.status)
@@ -192,6 +166,7 @@ async function toggleBeginButton() {
     }
     else {
       console.log('Retrieving saved game')
+      broadcastEvent(userName, 'GameLoadEvent', {});
       //console.log(currentGame)
       document.getElementById('beginButton').style.display = "none"
       output = document.getElementById('output')

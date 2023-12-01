@@ -162,6 +162,10 @@ html {
     /* outline:solid; */
   }
 
+.player-event {
+color: blue
+}
+
 .action-button {
     margin-right: 10px;
     background-color: #212529;

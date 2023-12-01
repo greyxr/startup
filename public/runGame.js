@@ -69,6 +69,7 @@ async function handleSeed() {
     document.getElementById('invDiv').style.display = "block"
     let seed = document.getElementById('seed')
     console.log('Seed: ' + seed.value)
+    broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seed.value);
     seed.style.display = "none"
     document.getElementById('seedP').style.display = "none"
     let prompt = 'The genre for this text adventure is inspired by ' + seed.value
@@ -149,45 +150,47 @@ function animateText(sentence, outputElement, delay = 0.04) {
     outputDiv.appendChild(document.createElement('br'))
     }
 
-  class webSocket {
-    socket;
-  constructor() {
-    this.configureWebSocket()
-  }
-  configureWebSocket() {
+  let socket;
+
+  document.addEventListener('DOMContentLoaded', async function() {
+    configureWebSocket();
+  })
+
+  function configureWebSocket() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
-    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
-    this.socket.onopen = (event) => {
-      this.displayMsg('system', 'game', 'connected')
+    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    socket.onopen = (event) => {
+      //socket.send(JSON.stringify({from:'admin', type:'GameStartEvent', value:'test'}))
+      displayMsg('game connected.')
     }
-    this.socket.onclose = (event) => {
-      this.displayMsg('system', 'game', 'disconnected')
+    socket.onclose = (event) => {
+      displayMsg('game disconnected.')
     }
-    this.socket.onmessage = async (event) => {
-      console.log("message received")
+    socket.onmessage = async (event) => {
       const msg = JSON.parse(await event.data.text())
       if (msg.type === 'GameStartEvent') {
-        this.displayMsg('player', msg.from, `scored`)
+        displayMsg(msg.from + ` started a new game with seed '${msg.value}'.`)
       } else if (msg.type === 'GameLoadEvent') {
-        this.displayMsg('player', msg.from, `started a new game`)
+        displayMsg(msg.from + ` started playing a saved game.`)
       }
     }
 }
 
-  displayMsg(cls, from, msg) {
+  function displayMsg(msg) {
     const chatText = document.getElementById('websocketDisplay')
-    // const newMessage = document.createElement('div')
-    // newMessage.innerHTML = 
-    chatText.innerHTML =
-      `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+    animateText(msg, 'websocketDisplay')
+    chatText.scrollTop = chatText.scrollHeight
   }
 
-  broadcastEvent(from, type, value) {
+  async function broadcastEvent(from, type, value) {
+    console.log('broadcastEvent hit')
+    console.log(from)
     const event = {
       from: from,
       type: type,
       value: value,
     };
-    this.socket.send(JSON.stringify(event));
+    console.log('Sending event to socket...')
+    console.log(event)
+    socket.send(JSON.stringify(event));
   }
-}
