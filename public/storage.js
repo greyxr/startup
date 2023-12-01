@@ -92,15 +92,6 @@ async function saveGame() {
     })
 }
 
-function loadUsersOnline() {
-    let usersOnlineSpan = document.getElementById('usersOnline')
-    usersOnlineSpan.innerText = getUsersOnline()
-}
-
-function getUsersOnline() {
-    return Math.floor(Math.random() * 10) + 1
-}
-
 function setLoginButton() {
   let loginButton = document.getElementById('loginButton')
   let logoutButton = document.getElementById('logoutButton')
@@ -114,7 +105,6 @@ function setLoginButton() {
 
 async function onLoadFunctions() {
     await loadUsername()
-    loadUsersOnline()
     setLoginButton()
 }
 
