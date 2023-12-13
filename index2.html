@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Xormbalfu Home Page</title>
+    <link rel="icon" href="./images/icon2.ico"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="./runGame.js"></script>
+    <script src="./storage.js"></script>
+</head>
+<body>
+    <header>
+<pre>
+____  ___                  ___.          .__   _____      
+\   \/  /___________  _____\_ |__ _____  |  |_/ ____\_ __ 
+ \     //  _ \_  __ \/     \| __ \\__  \ |  |\   __\  |  \
+ /     (  <_> )  | \/  Y Y  \ \_\ \/ __ \|  |_|  | |  |  /
+/___/\  \____/|__|  |__|_|  /___  (____  /____/__| |____/ 
+      \_/                 \/    \/     \/                 
+</pre>
+    </header>
+    <main class="switch-to-row">
+      <section class="invSection">
+        <div id="invDiv">
+        </div>
+      </section>
+      <section class="gameSection">
+        <button id="inputButton" type="button" style="display: none;" onclick="handleInput()"> Hidden Input </button>
+        <button id="seedButton" type="button" style="display: none;" onclick="handleSeed()"> Hidden </button>
+            <button id="beginButton" type="button" class="rounded" style="background-color: #212529; color: white" onclick="toggleBeginButton()">Begin</button>
+            <p id="seedP">Enter a word or phrase.</p>
+            <input type="input" class="form-control bg-dark text-white" id="seed" placeholder="a dark cave">
+
+            <!-- output box and input box -->
+        <div id="output"></div>
+        <input type="input" id="input" class="form-control bg-dark text-white" placeholder="go north..." value="">
+<div id="loading" class="loader">
+  <span class="loader__element"></span>
+  <span class="loader__element"></span>
+  <span class="loader__element"></span>
+</div>
+
+
+      </section>
+      <section class="chatSection hide-on-small-screen">
+      <div id="websocketDisplay" style="width:80%; height:60%; overflow:auto;">
+      </div>
+    </section>
+    </main>
+    <footer>
+      <hr/>
+        <!-- Hyperlinks to the different pages -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="./images/xorm1.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./index.html">Play</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="loginButton" href="./login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="logoutButton" onclick="logout()">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/greyxr/startup">GitHub</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="handleSave()">Save</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="if (gameStarted) { restartGame() } else { console.log('No game found to restart')}">Restart</a>
+          </li>
+          <li class="nav-item">
+            <!-- kind of an ugly solution, but it gets the visual effect -->
+            <a class="nav-link disabled" id="userCount" href="#" tabindex="-1" aria-disabled="true">currently logged in as <span id="userNameSpan"></span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    </footer>
+</body>
+
+<script>
+    // Get the input field
+var seed = document.getElementById("seed");
+
+// Execute a function when the user presses a key on the keyboard
+seed.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("seedButton").click();
+  }
+});
+
+// Get the input field
+var input = document.getElementById("input");
+
+// Execute a function when the user presses a key on the keyboard
+input.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("inputButton").click();
+  }
+});
+
+async function restartGame() {
+  console.log("In restart game")
+  let userName = document.getElementById('userNameSpan').innerText
+  let response = await fetch('/api/auth/restart?userName=' + userName, {
+    method: 'DELETE'
+  })
+  location.reload()
+}
+
+async function handleSave() {
+  if(loggedIn) {
+    saveGame();
+    if(gameStarted) {
+      printToOutput('\nGame saved.', true)
+    }
+  } else {
+    window.location.href = 'login.html';
+  }
+}
+
+async function toggleBeginButton() {
+    let userName = document.getElementById('userNameSpan').innerText
+    let response = await fetch('/api/auth/loadGame?userName=' + userName)
+    console.log(response.status)
+    if (response.status === 401) {
+      window.location.href = 'login.html'
+    }
+    console.log(response)
+    let currentGame = await response.json()
+    console.log(currentGame)
+    console.log('here!')
+    if (userName == 'guest' || currentGame.gameData == 'none') {
+      console.log('Starting new game')
+      document.getElementById('beginButton').style.display = "none"
+      document.getElementById('seed').style.display = "block"
+      document.getElementById('seedP').style.display = "block"
+      document.getElementById('seed').value = ''
+    }
+    else {
+      console.log('Retrieving saved game')
+      broadcastEvent(userName, 'GameLoadEvent', {});
+      //console.log(currentGame)
+      document.getElementById('beginButton').style.display = "none"
+      output = document.getElementById('output')
+      input = document.getElementById('input')
+      output.style.display = "block"
+      document.getElementById('invDiv').style.display = "block"
+      seed.style.display = "none"
+      document.getElementById('seedP').style.display = "none"
+      toggleLoading() // So that the loading div starts in the correct state
+      //await callGPT(currentGame, "Where am I?")
+      //printToOutput(currentGame.game)
+      outputHistory = currentGame.gameData
+      printCurrentGame(currentGame.gameData)
+      input.style.display = "block"
+      gameStarted = true
+    }
+}
+
+function printCurrentGame(game) {
+  const outputDiv = document.getElementById("output");
+  // console.log("Current game is:" + game)
+  let newDiv = document.createElement('div')
+  newDiv.innerText = game + '\n'
+  outputDiv.appendChild(newDiv)
+  outputDiv.scrollTop = output.scrollHeight
+}
+</script>
