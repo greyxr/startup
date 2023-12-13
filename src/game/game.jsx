@@ -1,10 +1,9 @@
 import React from 'react';
-import './about.css';
 
-export function About() {
+export function Game() {
   return (
     <main className='container-fluid text-center'>
-      <div>about displayed here</div>
+      <div>game displayed here</div>
     </main>
   );
 }
