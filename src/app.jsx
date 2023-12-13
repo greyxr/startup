@@ -2,6 +2,11 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Login } from './login/login';
+import { Play } from './play/play';
+import { About } from './about/about';
+
 
 export default function App() {
     const headerArt = String.raw`
@@ -12,20 +17,24 @@ export default function App() {
     /___/\  \____/|__|  |__|_|  /___  /____  /____/__| |____/ 
           \_/                 \/    \/     \/                 
     `;
-    const asciiLines = headerArt.split('\n');
-    for (const line of asciiLines) {
-        console.log(line)
-    }
     return (
+        <BrowserRouter>
     <div className="body">
             <header>
             <pre>{headerArt}</pre>
       </header>
+      <Routes>
+  <Route path='/' element={<Play />} exact />
+  <Route path='/about' element={<About />} />
+  <Route path='/login' element={<Login />} />
+  <Route path='*' element={<NotFound />} />
+</Routes>
     <footer>
-      <hr/>
+    <hr/>
         <MyNavbar/>
     </footer>
 </div>
+</BrowserRouter>
 );
 }
 
@@ -45,10 +54,10 @@ function MyNavbar() {
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
           <Nav className="mr-auto">
-            <Nav.Link href="./index.html">Play</Nav.Link>
-            <Nav.Link id="loginButton" href="./login.html">Login</Nav.Link>
+          <NavLink className='nav-link' to='/'>Play</NavLink>
+            <NavLink className='nav-link loginButton' to='login'>Login</NavLink>
             <Nav.Link id="logoutButton" onClick={() => logout()}>Logout</Nav.Link>
-            <Nav.Link href="./about.html">About</Nav.Link>
+            <NavLink className='nav-link' to='about'>About</NavLink>
             <Nav.Link href="https://github.com/greyxr/startup">GitHub</Nav.Link>
             <Nav.Link onClick={() => handleSave()}>Save</Nav.Link>
             <Nav.Link onClick={() => {
@@ -67,3 +76,7 @@ function MyNavbar() {
     </Navbar>
   );
 };
+
+function NotFound() {
+    return <main className='container-fluid bg-secondary text-center'>404: Return to sender. Address unknown.</main>;
+  }
