@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './about.css';
-import { animateText } from '../runGame.js'
+import { animateText } from '../animateText.js'
 
 export function About() {
   const sentence = `Xormbalfu is an experiment with using Chat-GPT to generate random
@@ -18,14 +18,12 @@ useEffect(() => {
   handleLoadAbout()
 })
 
-  //window.addEventListener('load', handleLoadAbout);
-
   return (
 
     <main>
       <div id="wordContainer">
         <div id="outputDiv"></div>
-        <img style={{ height: '3.5em', marginTop: '20%' }} src="./images/xorm1.png" alt="" />
+        <img style={{ height: '3.5em', marginTop: '20%' }} src="./xorm1.png" alt="" />
       </div>
     </main>
   );

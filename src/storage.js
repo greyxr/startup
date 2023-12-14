@@ -1,5 +1,3 @@
-
-
 async function login() {
     loginOrCreate(`/api/auth/login`)
 }
@@ -51,7 +49,6 @@ async function loginUser() {
 
   function setLoggedOut() {
     console.log("setLoggedOut hit")
-    // localStorage.delete("authenticated", false)
     localStorage.removeItem("authenticated")
   }
 
@@ -64,11 +61,6 @@ async function loginUser() {
   }
 
 export { logout }
-
-function saveUsername() {
-    const username = document.querySelector("#username");
-    localStorage.setItem("userName", username.value);
-}
 
 async function getUsername() {
         let userName = localStorage.getItem("userName")
@@ -101,16 +93,6 @@ function getAuthenticated() {
 
 export { getAuthenticated }
 
-// async function loadUsername() {
-//     let userNameSpan = document.getElementById('userNameSpan')
-//     userNameSpan.innerText = await getUsername()
-// }
-
-// export { loadUsername }
-
-// addEventListener("load", (event) => {});
-// onload = (event) => onLoadFunctions();
-
 async function saveGame() {
     await fetch('/api/auth/saveGame', {
         method: "POST",
@@ -125,23 +107,3 @@ async function saveGame() {
 }
 
 export { saveGame }
-
-// function setLoginButton(loginButton, logoutButton) {
-//   // let loginButton = document.getElementById('loginButton')
-//   // let logoutButton = document.getElementById('logoutButton')
-//   let loginStyle = loggedIn ? 'none' : 'block'
-//   let logoutStyle = loggedIn ? 'block' : 'none'
-  
-//   // Show or hide login/out buttons as appropriate
-//   loginButton.style.display = loginStyle
-//   logoutButton.style.display = logoutStyle
-// }
-
-async function onLoadFunctions(loginButton, logoutButton) {
-    // await loadUsername()
-    // setLoginButton(loginButton, logoutButton)
-}
-
-export { onLoadFunctions }
-
-// This simulates the websocket data for now. Every minute the number of users updates.

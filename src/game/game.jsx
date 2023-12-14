@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { animateText } from '../runGame.js'
+import { animateText } from '../animateText.js'
 
 export function Game() {
   const handleLoad = (event) => {
@@ -121,7 +121,6 @@ async function handleSeed() {
   seed.style.display = "none"
   document.getElementById('seedP').style.display = "none"
   let prompt = 'The genre for this text adventure is inspired by ' + seedValue
-  //stoggleLoading() // So that the loading div starts in the correct state
   await callGPT(prompt, "Where am I?")
   setInputVisible(true)
   setGameStarted(true)
@@ -135,8 +134,9 @@ async function handleInput() {
   }
 
   printToOutput('\n' + '> '+ inputBox)
-  await callGPT(inputBox, outputHistory)
+  const myInput = inputBox
   setInput("")
+  await callGPT(myInput, outputHistory)
 }
 
 function printToOutput(outputText, displayOnly = false) {
@@ -151,8 +151,8 @@ function printToOutput(outputText, displayOnly = false) {
 
 async function callGPT(input, context, tries = '3') {
   setLoading(true)
-  let apiKeyRes = await (await fetch("./config.json")).json()
-  let apiKey = apiKeyRes.apiKey
+  // let apiKeyRes = await (await fetch("./config.json")).json()
+  let apiKey = import.meta.env.VITE_API_KEY || ''
   let apiUrl = 'https://api.openai.com/v1/chat/completions'
   const requestData = {
       "model": "gpt-3.5-turbo",

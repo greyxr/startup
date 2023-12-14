@@ -6,9 +6,7 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Game } from './game/game';
 import { About } from './about/about';
-import { onLoadFunctions } from './storage.js'
-import { logout } from './storage.js'
-import { getAuthenticated, getUsername, saveGame } from './storage.js'
+import { getAuthenticated, getUsername, saveGame, logout } from './storage.js'
 
 
 export default function App() {
@@ -73,7 +71,7 @@ function MyNavbar({authenticated, onLogout}) {
     if(authenticated) {
       saveGame();
     } else {
-      window.location.href = 'login.html';
+      window.location.href = '/login';
     }
   }
 
@@ -82,7 +80,7 @@ function MyNavbar({authenticated, onLogout}) {
       <Container>
         <Navbar.Brand href="#">
           <img
-            src="./images/xorm1.png"
+            src="./xorm1.png"
             alt=""
             width="30"
             height="24"

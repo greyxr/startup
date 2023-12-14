@@ -1,29 +1,29 @@
 // global variables
-let inventory = []
+// let inventory = []
 
-let outputHistory = ''
+// let outputHistory = ''
 
-let gameStarted = false
+// let gameStarted = false
 
-let oldPrompt = `You are a narrator in a classic text adventure game. You will never break
-character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
-of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
-command given, respond with the reason why. Include an item in your description of every room
-for the player to pick up if they want, but only put it in their inventory if they ask for it.
-At the end of each message no matter what the player says, respond with an array containing the player's inventory if
-there is anything, like this:
-["book", "sword", "mysterious box"]
+// let oldPrompt = `You are a narrator in a classic text adventure game. You will never break
+// character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
+// of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
+// command given, respond with the reason why. Include an item in your description of every room
+// for the player to pick up if they want, but only put it in their inventory if they ask for it.
+// At the end of each message no matter what the player says, respond with an array containing the player's inventory if
+// there is anything, like this:
+// ["book", "sword", "mysterious box"]
 
-You need to keep track of the inventory array over time, so that the user has a consistent experience. When the user adds or drops an item from the inventory, go through the context thoroughly to determine what should be in the inventory.
+// You need to keep track of the inventory array over time, so that the user has a consistent experience. When the user adds or drops an item from the inventory, go through the context thoroughly to determine what should be in the inventory.
 
-If there is previous context, return the most recent array from there instead unless the current action has altered it, in which case return the updated array.
-Here is the context of previous messages:`
+// If there is previous context, return the most recent array from there instead unless the current action has altered it, in which case return the updated array.
+// Here is the context of previous messages:`
 
-let prompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
-character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
-of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
-command given, respond with the reason why.
-Here is the context of previous messages:`
+// let prompt = `You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+// character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
+// of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
+// command given, respond with the reason why.
+// Here is the context of previous messages:`
 
 // async function handleInput() {
 
@@ -133,22 +133,22 @@ Here is the context of previous messages:`
 //     }
 // }
 
-function animateText(sentence, outputElement, delay = 0.04) {
-    const words = sentence.split(' ');
+// function animateText(sentence, outputElement, delay = 0.04) {
+//     const words = sentence.split(' ');
     
-    const outputDiv = document.getElementById(outputElement);
-    words.forEach((word, index) => {
-      const wordDiv = document.createElement('span');
-      wordDiv.textContent = word + ' ';
-      wordDiv.classList.add('word');
-      wordDiv.style.animationDelay = `${delay* (index + 1)}s`;
-      outputDiv.appendChild(wordDiv);
-    })
-    outputDiv.appendChild(document.createElement('br'))
-    outputDiv.appendChild(document.createElement('br'))
-    }
+//     const outputDiv = document.getElementById(outputElement);
+//     words.forEach((word, index) => {
+//       const wordDiv = document.createElement('span');
+//       wordDiv.textContent = word + ' ';
+//       wordDiv.classList.add('word');
+//       wordDiv.style.animationDelay = `${delay* (index + 1)}s`;
+//       outputDiv.appendChild(wordDiv);
+//     })
+//     outputDiv.appendChild(document.createElement('br'))
+//     outputDiv.appendChild(document.createElement('br'))
+//     }
 
-export { animateText }
+// export { animateText }
 
   // let socket;
 
@@ -176,19 +176,19 @@ export { animateText }
 //     }
 // }
 
-  function displayMsg(msg) {
-    const chatText = document.getElementById('websocketDisplay')
-    animateText(msg, 'websocketDisplay')
-    chatText.scrollTop = chatText.scrollHeight
-  }
+  // function displayMsg(msg) {
+  //   const chatText = document.getElementById('websocketDisplay')
+  //   animateText(msg, 'websocketDisplay')
+  //   chatText.scrollTop = chatText.scrollHeight
+  // }
 
-  async function broadcastEvent(from, type, value) {
-    console.log('broadcastEvent hit')
-    console.log(from)
-    const event = {
-      from: from,
-      type: type,
-      value: value,
-    };
-    socket.send(JSON.stringify(event));
-  }
+  // async function broadcastEvent(from, type, value) {
+  //   console.log('broadcastEvent hit')
+  //   console.log(from)
+  //   const event = {
+  //     from: from,
+  //     type: type,
+  //     value: value,
+  //   };
+  //   socket.send(JSON.stringify(event));
+  // }
