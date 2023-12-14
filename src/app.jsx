@@ -6,9 +6,38 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Game } from './game/game';
 import { About } from './about/about';
+import { onLoadFunctions } from './storage.js'
+import { logout } from './storage.js'
+import { getAuthenticated } from './storage.js'
 
 
 export default function App() {
+  let socket
+  let authenticated = getAuthenticated()
+
+  const handleLoad = (event) => {
+    onLoadFunctions()
+    //authenticated = getAuthenticated()
+    console.log("loaded")
+  };
+
+  React.useEffect(() => {
+    handleLoad()
+    console.log(authenticated)
+  })
+
+  // function logout() {
+  //   console.log("logout triggered")
+  //   authenticated = false
+  //   localStorage.removeItem('userName');
+  //   fetch(`/api/auth/logout`, {
+  //     method: 'delete',
+  //   }).then(() => (window.location.href = '/login'));
+  // }
+
+  //window.addEventListener('load', handleLoad);
+
+
     const headerArt = String.raw`
     ____  ___                  ___.          .__   _____      
     \   \/  /___________  _____\_ |__ _____  |  |_/ ____\_ __ 
@@ -31,14 +60,26 @@ export default function App() {
 </Routes>
     <footer>
     <hr/>
-        <MyNavbar/>
+        <MyNavbar authenticated={authenticated} onLogout = {logout}/>
     </footer>
 </div>
 </BrowserRouter>
 );
 }
 
-function MyNavbar() {
+function MyNavbar({authenticated, onLogout}) {
+  let navAuthenticated = getAuthenticated()
+
+  React.useEffect(() => {
+    console.log(authenticated)
+    console.log(navAuthenticated)
+    navAuthenticated = getAuthenticated()
+  })
+
+  function handleLogout() {
+    onLogout()
+  }
+
   return (
     <Navbar bg="dark" expand="lg" variant="dark" fixed="bottom">
       <Container>
@@ -55,8 +96,8 @@ function MyNavbar() {
         <Navbar.Collapse id="navbarNav">
           <Nav className="mr-auto">
           <NavLink className='nav-link' to='/'>Play</NavLink>
-            <NavLink className='nav-link loginButton' to='login'>Login</NavLink>
-            <Nav.Link id="logoutButton" onClick={() => logout()}>Logout</Nav.Link>
+            <NavLink className='nav-link loginButton' style={{display: authenticated ? 'none' : 'block'}} to='login'>Login</NavLink>
+            <Nav.Link id="logoutButton" style={{display: authenticated ? 'block' : 'none'}}  onClick={() => handleLogout()}>Logout</Nav.Link>
             <NavLink className='nav-link' to='about'>About</NavLink>
             <Nav.Link href="https://github.com/greyxr/startup">GitHub</Nav.Link>
             <Nav.Link onClick={() => handleSave()}>Save</Nav.Link>

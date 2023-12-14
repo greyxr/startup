@@ -140,31 +140,33 @@ function animateText(sentence, outputElement, delay = 0.04) {
     outputDiv.appendChild(document.createElement('br'))
     }
 
-  let socket;
+export { animateText }
 
-  document.addEventListener('DOMContentLoaded', async function() {
-    configureWebSocket();
-  })
+  // let socket;
 
-  function configureWebSocket() {
-    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
-    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
-    socket.onopen = (event) => {
-      //socket.send(JSON.stringify({from:'admin', type:'GameStartEvent', value:'test'}))
-      displayMsg('game connected.')
-    }
-    socket.onclose = (event) => {
-      displayMsg('game disconnected.')
-    }
-    socket.onmessage = async (event) => {
-      const msg = JSON.parse(await event.data.text())
-      if (msg.type === 'GameStartEvent') {
-        displayMsg(msg.from + ` started a new game with seed '${msg.value}'.`)
-      } else if (msg.type === 'GameLoadEvent') {
-        displayMsg(msg.from + ` started playing a saved game.`)
-      }
-    }
-}
+  // document.addEventListener('DOMContentLoaded', async function() {
+  //   configureWebSocket();
+  // })
+
+//   function configureWebSocket() {
+//     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
+//     socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+//     socket.onopen = (event) => {
+//       //socket.send(JSON.stringify({from:'admin', type:'GameStartEvent', value:'test'}))
+//       displayMsg('game connected.')
+//     }
+//     socket.onclose = (event) => {
+//       displayMsg('game disconnected.')
+//     }
+//     socket.onmessage = async (event) => {
+//       const msg = JSON.parse(await event.data.text())
+//       if (msg.type === 'GameStartEvent') {
+//         displayMsg(msg.from + ` started a new game with seed '${msg.value}'.`)
+//       } else if (msg.type === 'GameLoadEvent') {
+//         displayMsg(msg.from + ` started playing a saved game.`)
+//       }
+//     }
+// }
 
   function displayMsg(msg) {
     const chatText = document.getElementById('websocketDisplay')
