@@ -14,36 +14,12 @@ import { getAuthenticated, getUsername, saveGame } from './storage.js'
 export default function App() {
   let socket
   let authenticated = getAuthenticated()
-
-  const handleLoad = (event) => {
-    // onLoadFunctions()
-    //authenticated = getAuthenticated()
-    console.log("loaded")
-  };
-
-  React.useEffect(() => {
-    handleLoad()
-    console.log(authenticated)
-  })
-
-  // function logout() {
-  //   console.log("logout triggered")
-  //   authenticated = false
-  //   localStorage.removeItem('userName');
-  //   fetch(`/api/auth/logout`, {
-  //     method: 'delete',
-  //   }).then(() => (window.location.href = '/login'));
-  // }
-
-  //window.addEventListener('load', handleLoad);
-
-
-    const headerArt = String.raw`
+  const headerArt = String.raw`
     ____  ___                  ___.          .__   _____      
     \   \/  /___________  _____\_ |__ _____  |  |_/ ____\_ __ 
      \     //  _ \_  __ \/     \| __ \\__  \ |  |\   __\  |  \
-     /     |  (_) |  | \/  Y Y  \ \_\ \/ __ \|  |_|  | |  |  /
-    /___/\  \____/|__|  |__|_|  /___  /____  /____/__| |____/ 
+     /     (  <_> )  | \/  Y Y  \ \_\ \/ __ \|  |_|  | |  |  /
+    /___/\  \____/|__|  |__|_|  /___  (____  /____/__| |____/ 
           \_/                 \/    \/     \/                 
     `;
     return (

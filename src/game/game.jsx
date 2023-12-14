@@ -7,7 +7,6 @@ export function Game() {
   };
 
   const [seedValue, setSeedValue] = useState('');
-  const [hideSeedInput, setHideSeedInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputVisible, setInputVisible] = useState(false);
   const [socket, setSocket] = useState(false);
@@ -26,7 +25,6 @@ export function Game() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
     const newSocket = new WebSocket(`${protocol}://${window.location.host}/ws`)
     newSocket.onopen = (event) => {
-      //socket.send(JSON.stringify({from:'admin', type:'GameStartEvent', value:'test'}))
       displayMsg('game connected.')
     }
     newSocket.onclose = (event) => {
@@ -49,8 +47,6 @@ function displayMsg(msg) {
 }
 
 async function broadcastEvent(from, type, value) {
-  console.log('broadcastEvent hit')
-  console.log(from)
   const event = {
     from: from,
     type: type,
@@ -67,7 +63,6 @@ const handleSeedKeyPress = (event) => {
 };
 
 const handleInputKeyPress = (event) => {
-  console.log("Pressed!")
   if (event.key === "Enter") {
     // Cancel the default action, if needed
     event.preventDefault();
@@ -82,35 +77,24 @@ var input = document.getElementById("input");
 async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/auth/loadGame?userName=' + userName)
-    console.log(response.status)
     if (response.status === 401) {
       window.location.href = 'login.html'
     }
-    console.log(response)
     let currentGame = await response.json()
-    console.log(currentGame)
-    console.log('here!')
     if (userName == 'guest' || currentGame.gameData == 'none') {
-      console.log('Starting new game')
       document.getElementById('beginButton').style.display = "none"
       document.getElementById('seed').style.display = "block"
       document.getElementById('seedP').style.display = "block"
       document.getElementById('seed').value = ''
     }
     else {
-      console.log('Retrieving saved game')
       broadcastEvent(userName, 'GameLoadEvent', {});
-      //console.log(currentGame)
       document.getElementById('beginButton').style.display = "none"
       output = document.getElementById('output')
       input = document.getElementById('input')
       output.style.display = "block"
       document.getElementById('invDiv').style.display = "block"
-      setHideSeedInput(true)
       document.getElementById('seedP').style.display = "none"
-      //toggleLoading() // So that the loading div starts in the correct state
-      //await callGPT(currentGame, "Where am I?")
-      //printToOutput(currentGame.game)
       outputHistory = currentGame.gameData
       printCurrentGame(currentGame.gameData)
       setInputVisible(true)
@@ -134,7 +118,6 @@ async function handleSeed() {
   document.getElementById('invDiv').style.display = "block"
   let seed = document.getElementById('seed')
   broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seedValue);
-  setHideSeedInput(true)
   seed.style.display = "none"
   document.getElementById('seedP').style.display = "none"
   let prompt = 'The genre for this text adventure is inspired by ' + seedValue
@@ -155,17 +138,6 @@ async function handleInput() {
   await callGPT(inputBox, outputHistory)
   setInput("")
 }
-
-// function toggleLoading() {
-//     let loading = document.getElementById('loading')
-//     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
-// }
-
-// function toggleLoading() {
-// //let loading = document.getElementById('loading')
-// //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
-// setLoading(!loading)
-// }
 
 function printToOutput(outputText, displayOnly = false) {
   let output = document.getElementById('output')
@@ -203,11 +175,9 @@ async function callGPT(input, context, tries = '3') {
     try {
       let response = await fetch(apiUrl, requestOptions)
       let data = await response.json()
-      // setLoading(false)
       try {
           let message = data.choices[0].message.content
           printToOutput(message)
-          // Saves the game locally
           localStorage.setItem("outputHistory", outputHistory)
       }
       catch (e) {
@@ -218,7 +188,6 @@ async function callGPT(input, context, tries = '3') {
           }
       }
   } catch (error) {
-      // setLoading(false)
       console.error('API Request Error:', error)
       if (tries != 0) {
           console.log(`Automatically retrying... ${tries} left`)
