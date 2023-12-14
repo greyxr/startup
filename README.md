@@ -95,6 +95,6 @@ Xormbalfu will run off of Javascript in the browser.
 
 ## React Deliverable
 - <b> Bundled </b> - Done
-- <b> Multiple functional react components </b> - I have game, login, about, and app React components.
+- <b> Multiple functional react components </b> - I have Game, Login, About, and App React components.
 - <b> React router </b> - My App component is wrapped in a React router and my navbar routes between the different components.
-- <b> React hooks </b> - I use hooks to set states and trigger functions when compnents render.
+- <b> React hooks </b> - I use stateful logic in components.
