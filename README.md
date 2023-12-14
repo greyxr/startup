@@ -6,7 +6,7 @@ Website: [startup.xormbalfu.click](startup.xormbalfu.click)
 Xormbalfu is a simple text adventure game focused on exploration and collecting treasure. I'm going to try to make a text parser, but if that doesn't work, input from the user will come from interaction with a series of buttons on the screen, which will expand in scope as the player finds items and equipment. The player explores the ancient alien city of Xormbalfu, trying to retrieve treasure and discover the secrets of the dead city before being eaten by one of the current inhabitants.
 
 The game will feel like a cross between the 1977 text adventure [Zork](https://classicreload.com/zork-i.html) and the 2013 text based RPG [A Dark Room](https://adarkroom.doublespeakgames.com/).
-<p align="center"><img src="./images/xorm1.png"></p>
+<p align="center"><img src="./public/xorm1.png"></p>
 
 ## Key Features
 - Secure login
@@ -93,8 +93,8 @@ Xormbalfu will run off of Javascript in the browser.
 - <b> Data sent over WebSocket connection </b> - An event is broadcast whenever a player begins a new game or loads a saved game.
 - <b> WebSocket data displayed in the application interface </b> The events are displayed on the right hand side of the screen in real time (and they're animated!)
 
-
-
-
-
-
+## React Deliverable
+- <b> Bundled </b> - Done
+- <b> Multiple functional react components </b> - I have game, login, about, and app React components.
+- <b> React router </b> - My App component is wrapped in a React router and my navbar routes between the different components.
+- <b> React hooks </b> - I use hooks to set states and trigger functions when compnents render.

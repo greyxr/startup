@@ -1,5 +1,3 @@
-let loggedIn = false
-
 async function login() {
     loginOrCreate(`/api/auth/login`)
 }
@@ -7,6 +5,8 @@ async function login() {
 async function loginUser() {
     loginOrCreate(`/api/auth/login`);
   }
+
+  export {loginUser, login, createUser}
   
   async function createUser() {
     loginOrCreate(`/api/auth/create`);
@@ -17,6 +17,7 @@ async function loginUser() {
     const password = document.querySelector('#password')?.value;
     if (userName == '' || password == '') {
       document.getElementById('loginErrorMessage').textContent = `⚠ Error: Please enter a valid username and password`;
+      return
     }
     const response = await fetch(endpoint, {
       method: 'post',
@@ -27,28 +28,39 @@ async function loginUser() {
     });
   
     if (response.ok) {
+      console.log("logged in")
       localStorage.setItem('userName', userName);
+      localStorage.setItem("authenticated", true)
       document.getElementById('loginErrorMessage').textContent = ``;
-      loggedIn = true
-      window.location.href = 'index.html';
+      setLoggedIn()
+      window.location.href = '/#';
     } else {
+      console.log("error")
       const body = await response.json();
       document.getElementById('loginErrorMessage').textContent = `⚠ Error: ${body.msg}`;
     }
   }
 
+  export { loginOrCreate }
+
+  function setLoggedIn() {
+    localStorage.setItem("authenticated", true)
+  }
+
+  function setLoggedOut() {
+    console.log("setLoggedOut hit")
+    localStorage.removeItem("authenticated")
+  }
+
   function logout() {
-    loggedIn = false
+    setLoggedOut()
     localStorage.removeItem('userName');
     fetch(`/api/auth/logout`, {
       method: 'delete',
-    }).then(() => (window.location.href = '/login.html'));
+    }).then(() => (window.location.href = '/login'));
   }
 
-function saveUsername() {
-    const username = document.querySelector("#username");
-    localStorage.setItem("userName", username.value);
-}
+export { logout }
 
 async function getUsername() {
         let userName = localStorage.getItem("userName")
@@ -61,7 +73,7 @@ async function getUsername() {
           const results = await fetch (`/api/user/${userName}`)
           if (results.status == 200) {
             let body = await results.json()
-            if (body.authenticated === true) loggedIn = true
+            if (body.authenticated === true) setLoggedIn()
             return userName
           }
           else {
@@ -71,13 +83,15 @@ async function getUsername() {
          }
   }
 
-async function loadUsername() {
-    let userNameSpan = document.getElementById('userNameSpan')
-    userNameSpan.innerText = await getUsername()
+export { getUsername }
+
+function getAuthenticated() {
+  const auth = localStorage.getItem("authenticated")
+  if (auth == null || auth == false) return false
+  return true
 }
 
-addEventListener("load", (event) => {});
-onload = (event) => onLoadFunctions();
+export { getAuthenticated }
 
 async function saveGame() {
     await fetch('/api/auth/saveGame', {
@@ -92,21 +106,4 @@ async function saveGame() {
     })
 }
 
-function setLoginButton() {
-  let loginButton = document.getElementById('loginButton')
-  let logoutButton = document.getElementById('logoutButton')
-  let loginStyle = loggedIn ? 'none' : 'block'
-  let logoutStyle = loggedIn ? 'block' : 'none'
-  
-  // Show or hide login/out buttons as appropriate
-  loginButton.style.display = loginStyle
-  logoutButton.style.display = logoutStyle
-}
-
-async function onLoadFunctions() {
-    await loadUsername()
-    setLoginButton()
-}
-
-// This simulates the websocket data for now. Every minute the number of users updates.
-let interval = setInterval(function () { loadUsersOnline(); }, 60000);
+export { saveGame }

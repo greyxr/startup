@@ -1,19 +1,18 @@
 {
-  "name": "startup",
-  "version": "1.0.0",
-  "description": "## Xormbalfu -- a simple text adventure Website: [startup.xormbalfu.click](startup.xormbalfu.click)",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "",
-  "license": "ISC",
+  "devDependencies": {
+    "vite": "^4.3.2"
+  },
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.2",
-    "mongodb": "^6.2.0",
-    "uuid": "^9.0.1",
-    "ws": "^8.14.2"
+    "bootstrap": "^5.2.3",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3"
   }
+  
 }
