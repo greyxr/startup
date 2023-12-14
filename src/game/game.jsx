@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { animateText, handleInput } from '../runGame.js'
+import { animateText } from '../runGame.js'
 
 export function Game() {
   const handleLoad = (event) => {
@@ -10,22 +10,28 @@ export function Game() {
   const [hideSeedInput, setHideSeedInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputVisible, setInputVisible] = useState(false);
+  const [socket, setSocket] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [prompt] = useState(`You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+  character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
+  of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
+  command given, respond with the reason why.
+  Here is the context of previous messages:`)
 
-  let socket
   let outputHistory = ''
   
     window.addEventListener('load', handleLoad);
   function configureWebSocket() {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss'
-    socket = new WebSocket(`${protocol}://${window.location.host}/ws`)
-    socket.onopen = (event) => {
+    const newSocket = new WebSocket(`${protocol}://${window.location.host}/ws`)
+    newSocket.onopen = (event) => {
       //socket.send(JSON.stringify({from:'admin', type:'GameStartEvent', value:'test'}))
       displayMsg('game connected.')
     }
-    socket.onclose = (event) => {
+    newSocket.onclose = (event) => {
       displayMsg('game disconnected.')
     }
-    socket.onmessage = async (event) => {
+    newSocket.onmessage = async (event) => {
       const msg = JSON.parse(await event.data.text())
       if (msg.type === 'GameStartEvent') {
         displayMsg(msg.from + ` started a new game with seed '${msg.value}'.`)
@@ -33,6 +39,7 @@ export function Game() {
         displayMsg(msg.from + ` started playing a saved game.`)
       }
     }
+    setSocket(newSocket)
 }
 function displayMsg(msg) {
   const chatText = document.getElementById('websocketDisplay')
@@ -59,6 +66,7 @@ const handleSeedKeyPress = (event) => {
 };
 
 const handleInputKeyPress = (event) => {
+  console.log("Pressed!")
   if (event.key === "Enter") {
     // Cancel the default action, if needed
     event.preventDefault();
@@ -111,7 +119,7 @@ async function toggleBeginButton() {
       outputHistory = currentGame.gameData
       printCurrentGame(currentGame.gameData)
       setInputVisible(true)
-      gameStarted = true
+      setGameStarted(true)
     }
 }
 
@@ -136,7 +144,113 @@ async function handleSeed() {
   toggleLoading() // So that the loading div starts in the correct state
   await callGPT(prompt, "Where am I?")
   setInputVisible(true)
-  gameStarted = true
+  setGameStarted(true)
+}
+
+async function handleInput() {
+
+  // Assign variables
+  inputBox = document.getElementById('input')
+  output = document.getElementById('output')
+  
+  // Check for empty command
+  if(inputBox.value == '') {
+      return
+  }
+
+  printToOutput('\n' + '> '+ inputBox.value)
+  inputBox.value = ''
+  await callGPT(inputBox.value, outputHistory)
+}
+
+// function toggleLoading() {
+//     let loading = document.getElementById('loading')
+//     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+// }
+
+function toggleLoading() {
+//let loading = document.getElementById('loading')
+//loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+setLoading(!loading)
+}
+
+function printToOutput(outputText, displayOnly = false) {
+  let output = document.getElementById('output')
+  outputText += '\n'
+  if (!displayOnly) {
+      outputHistory += outputText
+  }
+  animateText(outputText, 'output')
+  output.scrollTop = output.scrollHeight
+}
+
+async function handleSeed() {
+  output = document.getElementById('output')
+  input = document.getElementById('input')
+  output.style.display = "block"
+  document.getElementById('invDiv').style.display = "block"
+  let seed = document.getElementById('seed')
+  broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seed.value);
+  seed.style.display = "none"
+  document.getElementById('seedP').style.display = "none"
+  let prompt = 'The genre for this text adventure is inspired by ' + seed.value
+  toggleLoading() // So that the loading div starts in the correct state
+  await callGPT(prompt, "Where am I?")
+  input.style.display = "block"
+  setGameStarted(true)
+}
+
+async function callGPT(input, context, tries = '3') {
+  toggleLoading()
+  let apiKeyRes = await (await fetch("./config.json")).json()
+  let apiKey = apiKeyRes.apiKey
+  let apiUrl = 'https://api.openai.com/v1/chat/completions'
+  const requestData = {
+      "model": "gpt-3.5-turbo",
+      "messages": [
+          {"role": "system", "content": `${prompt + context}`},
+          {"role": "user", "content": `${input}`}
+      ],
+      "temperature": 0.50
+    };
+    
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    };
+    
+    try {
+      let response = await fetch(apiUrl, requestOptions)
+      let data = await response.json()
+      toggleLoading()
+      try {
+          let message = data.choices[0].message.content
+          printToOutput(message)
+          // Saves the game locally
+          localStorage.setItem("outputHistory", outputHistory)
+      }
+      catch (e) {
+          console.error(e)
+          if (tries != 0) {
+              console.log(`Automatically retrying... ${tries} left`)
+              callGPT(input, context, (tries - 1))
+          }
+      }
+  } catch (error) {
+      toggleLoading()
+      console.error('API Request Error:', error)
+      if (tries != 0) {
+          console.log(`Automatically retrying... ${tries} left`)
+          callGPT(input, context, (tries - 1))
+      }
+      else {
+          printToOutput(`Network error ${error}. Please try again or refresh if issue persists.`)
+      }
+  }
 }
 
   return (
@@ -167,7 +281,7 @@ async function handleSeed() {
 
         {/* Output box and input box */}
         <div id="output"></div>
-        <input type="input" id="input" className="form-control bg-dark text-white" placeholder="go north..." value="" onKeyDown={handleInputKeyPress} style={{
+        <input type="input" id="input" className="form-control bg-dark text-white" placeholder="go north..." onKeyDown={handleInputKeyPress} style={{
             display: inputVisible ? 'block' : 'none',
           }}/>
         <div id="loading" className="loader" style={{

@@ -25,113 +25,113 @@ of the new room. Each response will contain directions of where the user can go.
 command given, respond with the reason why.
 Here is the context of previous messages:`
 
-async function handleInput() {
+// async function handleInput() {
 
-    // Assign variables
-    inputBox = document.getElementById('input')
-    output = document.getElementById('output')
+//     // Assign variables
+//     inputBox = document.getElementById('input')
+//     output = document.getElementById('output')
     
-    // Check for empty command
-    if(inputBox.value == '') {
-        return
-    }
+//     // Check for empty command
+//     if(inputBox.value == '') {
+//         return
+//     }
 
-    printToOutput('\n' + '> '+ inputBox.value)
-    inputBox.value = ''
-    await callGPT(inputBox.value, outputHistory)
-}
-
-export { handleInput }
-
-// function toggleLoading() {
-//     let loading = document.getElementById('loading')
-//     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+//     printToOutput('\n' + '> '+ inputBox.value)
+//     inputBox.value = ''
+//     await callGPT(inputBox.value, outputHistory)
 // }
 
-function toggleLoading() {
-  //let loading = document.getElementById('loading')
-  //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
-  setLoading(!loading)
-}
+// export { handleInput }
 
-function printToOutput(outputText, displayOnly = false) {
-    let output = document.getElementById('output')
-    outputText += '\n'
-    if (!displayOnly) {
-        outputHistory += outputText
-    }
-    animateText(outputText, 'output')
-    output.scrollTop = output.scrollHeight
-}
+// // function toggleLoading() {
+// //     let loading = document.getElementById('loading')
+// //     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+// // }
 
-async function handleSeed() {
-    output = document.getElementById('output')
-    input = document.getElementById('input')
-    output.style.display = "block"
-    document.getElementById('invDiv').style.display = "block"
-    let seed = document.getElementById('seed')
-    broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seed.value);
-    seed.style.display = "none"
-    document.getElementById('seedP').style.display = "none"
-    let prompt = 'The genre for this text adventure is inspired by ' + seed.value
-    toggleLoading() // So that the loading div starts in the correct state
-    await callGPT(prompt, "Where am I?")
-    input.style.display = "block"
-    gameStarted = true
-}
+// function toggleLoading() {
+//   //let loading = document.getElementById('loading')
+//   //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+//   setLoading(!loading)
+// }
 
-async function callGPT(input, context, tries = '3') {
-    toggleLoading()
-    let apiKeyRes = await (await fetch("./config.json")).json()
-    let apiKey = apiKeyRes.apiKey
-    let apiUrl = 'https://api.openai.com/v1/chat/completions'
-    const requestData = {
-        "model": "gpt-3.5-turbo",
-        "messages": [
-            {"role": "system", "content": `${prompt + context}`},
-            {"role": "user", "content": `${input}`}
-        ],
-        "temperature": 0.50
-      };
+// function printToOutput(outputText, displayOnly = false) {
+//     let output = document.getElementById('output')
+//     outputText += '\n'
+//     if (!displayOnly) {
+//         outputHistory += outputText
+//     }
+//     animateText(outputText, 'output')
+//     output.scrollTop = output.scrollHeight
+// }
+
+// async function handleSeed() {
+//     output = document.getElementById('output')
+//     input = document.getElementById('input')
+//     output.style.display = "block"
+//     document.getElementById('invDiv').style.display = "block"
+//     let seed = document.getElementById('seed')
+//     broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seed.value);
+//     seed.style.display = "none"
+//     document.getElementById('seedP').style.display = "none"
+//     let prompt = 'The genre for this text adventure is inspired by ' + seed.value
+//     toggleLoading() // So that the loading div starts in the correct state
+//     await callGPT(prompt, "Where am I?")
+//     input.style.display = "block"
+//     gameStarted = true
+// }
+
+// async function callGPT(input, context, tries = '3') {
+//     toggleLoading()
+//     let apiKeyRes = await (await fetch("./config.json")).json()
+//     let apiKey = apiKeyRes.apiKey
+//     let apiUrl = 'https://api.openai.com/v1/chat/completions'
+//     const requestData = {
+//         "model": "gpt-3.5-turbo",
+//         "messages": [
+//             {"role": "system", "content": `${prompt + context}`},
+//             {"role": "user", "content": `${input}`}
+//         ],
+//         "temperature": 0.50
+//       };
       
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-      };
+//       const requestOptions = {
+//         method: 'POST',
+//         headers: {
+//           'Authorization': `Bearer ${apiKey}`,
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(requestData)
+//       };
       
-      try {
-        let response = await fetch(apiUrl, requestOptions)
-        let data = await response.json()
-        toggleLoading()
-        try {
-            let message = data.choices[0].message.content
-            printToOutput(message)
-            // Saves the game locally
-            localStorage.setItem("outputHistory", outputHistory)
-        }
-        catch (e) {
-            console.error(e)
-            if (tries != 0) {
-                console.log(`Automatically retrying... ${tries} left`)
-                callGPT(input, context, (tries - 1))
-            }
-        }
-    } catch (error) {
-        toggleLoading()
-        console.error('API Request Error:', error)
-        if (tries != 0) {
-            console.log(`Automatically retrying... ${tries} left`)
-            callGPT(input, context, (tries - 1))
-        }
-        else {
-            printToOutput(`Network error ${error}. Please try again or refresh if issue persists.`)
-        }
-    }
-}
+//       try {
+//         let response = await fetch(apiUrl, requestOptions)
+//         let data = await response.json()
+//         toggleLoading()
+//         try {
+//             let message = data.choices[0].message.content
+//             printToOutput(message)
+//             // Saves the game locally
+//             localStorage.setItem("outputHistory", outputHistory)
+//         }
+//         catch (e) {
+//             console.error(e)
+//             if (tries != 0) {
+//                 console.log(`Automatically retrying... ${tries} left`)
+//                 callGPT(input, context, (tries - 1))
+//             }
+//         }
+//     } catch (error) {
+//         toggleLoading()
+//         console.error('API Request Error:', error)
+//         if (tries != 0) {
+//             console.log(`Automatically retrying... ${tries} left`)
+//             callGPT(input, context, (tries - 1))
+//         }
+//         else {
+//             printToOutput(`Network error ${error}. Please try again or refresh if issue persists.`)
+//         }
+//     }
+// }
 
 function animateText(sentence, outputElement, delay = 0.04) {
     const words = sentence.split(' ');
