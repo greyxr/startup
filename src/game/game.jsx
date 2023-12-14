@@ -79,13 +79,6 @@ const handleInputKeyPress = (event) => {
 // Get the input field
 var input = document.getElementById("input");
 
-function toggleLoading() {
-  console.log('loading hit')
-  //let loading = document.getElementById('loading')
-  //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
-  setLoading((loading) => !loading)
-}
-
 async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/auth/loadGame?userName=' + userName)
@@ -115,7 +108,7 @@ async function toggleBeginButton() {
       document.getElementById('invDiv').style.display = "block"
       setHideSeedInput(true)
       document.getElementById('seedP').style.display = "none"
-      toggleLoading() // So that the loading div starts in the correct state
+      //toggleLoading() // So that the loading div starts in the correct state
       //await callGPT(currentGame, "Where am I?")
       //printToOutput(currentGame.game)
       outputHistory = currentGame.gameData
@@ -139,11 +132,13 @@ async function handleSeed() {
   input = document.getElementById('input')
   output.style.display = "block"
   document.getElementById('invDiv').style.display = "block"
+  let seed = document.getElementById('seed')
   broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seedValue);
   setHideSeedInput(true)
+  seed.style.display = "none"
   document.getElementById('seedP').style.display = "none"
   let prompt = 'The genre for this text adventure is inspired by ' + seedValue
-  toggleLoading() // So that the loading div starts in the correct state
+  //stoggleLoading() // So that the loading div starts in the correct state
   await callGPT(prompt, "Where am I?")
   setInputVisible(true)
   setGameStarted(true)
@@ -166,11 +161,11 @@ async function handleInput() {
 //     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
 // }
 
-function toggleLoading() {
-//let loading = document.getElementById('loading')
-//loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
-setLoading(!loading)
-}
+// function toggleLoading() {
+// //let loading = document.getElementById('loading')
+// //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+// setLoading(!loading)
+// }
 
 function printToOutput(outputText, displayOnly = false) {
   let output = document.getElementById('output')
@@ -182,24 +177,8 @@ function printToOutput(outputText, displayOnly = false) {
   output.scrollTop = output.scrollHeight
 }
 
-async function handleSeed() {
-  output = document.getElementById('output')
-  input = document.getElementById('input')
-  output.style.display = "block"
-  document.getElementById('invDiv').style.display = "block"
-  let seed = document.getElementById('seed')
-  broadcastEvent(localStorage.getItem("userName"), 'GameStartEvent', seed.value);
-  seed.style.display = "none"
-  document.getElementById('seedP').style.display = "none"
-  let prompt = 'The genre for this text adventure is inspired by ' + seed.value
-  toggleLoading() // So that the loading div starts in the correct state
-  await callGPT(prompt, "Where am I?")
-  input.style.display = "block"
-  setGameStarted(true)
-}
-
 async function callGPT(input, context, tries = '3') {
-  toggleLoading()
+  setLoading(true)
   let apiKeyRes = await (await fetch("./config.json")).json()
   let apiKey = apiKeyRes.apiKey
   let apiUrl = 'https://api.openai.com/v1/chat/completions'
@@ -224,7 +203,7 @@ async function callGPT(input, context, tries = '3') {
     try {
       let response = await fetch(apiUrl, requestOptions)
       let data = await response.json()
-      toggleLoading()
+      // setLoading(false)
       try {
           let message = data.choices[0].message.content
           printToOutput(message)
@@ -239,7 +218,7 @@ async function callGPT(input, context, tries = '3') {
           }
       }
   } catch (error) {
-      toggleLoading()
+      // setLoading(false)
       console.error('API Request Error:', error)
       if (tries != 0) {
           console.log(`Automatically retrying... ${tries} left`)
@@ -248,6 +227,8 @@ async function callGPT(input, context, tries = '3') {
       else {
           printToOutput(`Network error ${error}. Please try again or refresh if issue persists.`)
       }
+  } finally {
+    setLoading(false)
   }
 }
 
