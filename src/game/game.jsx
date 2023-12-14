@@ -78,7 +78,7 @@ async function toggleBeginButton() {
     let userName = document.getElementById('userNameSpan').innerText
     let response = await fetch('/api/auth/loadGame?userName=' + userName)
     if (response.status === 401) {
-      window.location.href = 'login.html'
+      window.location.href = '/login'
     }
     let currentGame = await response.json()
     if (userName == 'guest' || currentGame.gameData == 'none') {
