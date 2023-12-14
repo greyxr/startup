@@ -12,7 +12,8 @@ export function Game() {
   const [inputVisible, setInputVisible] = useState(false);
   const [socket, setSocket] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [prompt] = useState(`You are a sarcastic, caustic narrator in a classic text adventure game. You will never break
+  const [inputBox, setInput] = useState("")
+  const [prompt] = useState(`You are a narrator in a classic text adventure game. You will never break
   character and you will only respond with the appropriate output for the command given. If I enter a new room, give a detailed description
   of the new room. Each response will contain directions of where the user can go. If a user cannot reasonably perform a
   command given, respond with the reason why.
@@ -79,9 +80,10 @@ const handleInputKeyPress = (event) => {
 var input = document.getElementById("input");
 
 function toggleLoading() {
+  console.log('loading hit')
   //let loading = document.getElementById('loading')
   //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
-  setLoading(!loading)
+  setLoading((loading) => !loading)
 }
 
 async function toggleBeginButton() {
@@ -148,19 +150,15 @@ async function handleSeed() {
 }
 
 async function handleInput() {
-
-  // Assign variables
-  inputBox = document.getElementById('input')
-  output = document.getElementById('output')
   
   // Check for empty command
-  if(inputBox.value == '') {
+  if(inputBox == '') {
       return
   }
 
-  printToOutput('\n' + '> '+ inputBox.value)
-  inputBox.value = ''
-  await callGPT(inputBox.value, outputHistory)
+  printToOutput('\n' + '> '+ inputBox)
+  await callGPT(inputBox, outputHistory)
+  setInput("")
 }
 
 // function toggleLoading() {
@@ -281,9 +279,10 @@ async function callGPT(input, context, tries = '3') {
 
         {/* Output box and input box */}
         <div id="output"></div>
-        <input type="input" id="input" className="form-control bg-dark text-white" placeholder="go north..." onKeyDown={handleInputKeyPress} style={{
+        <input type="input" id="input" className="form-control bg-dark text-white" placeholder="go north..." onChange={(e) => setInput(e.target.value)} onKeyDown={handleInputKeyPress} style={{
             display: inputVisible ? 'block' : 'none',
-          }}/>
+          }}
+          value={inputBox}/>
         <div id="loading" className="loader" style={{
             display: loading ? 'flex' : 'none',
           }}>

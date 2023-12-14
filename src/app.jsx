@@ -8,7 +8,7 @@ import { Game } from './game/game';
 import { About } from './about/about';
 import { onLoadFunctions } from './storage.js'
 import { logout } from './storage.js'
-import { getAuthenticated, getUsername } from './storage.js'
+import { getAuthenticated, getUsername, saveGame } from './storage.js'
 
 
 export default function App() {
@@ -94,11 +94,8 @@ function MyNavbar({authenticated, onLogout}) {
   }
   
   async function handleSave() {
-    if(loggedIn) {
+    if(authenticated) {
       saveGame();
-      if(gameStarted) {
-        printToOutput('\nGame saved.', true)
-      }
     } else {
       window.location.href = 'login.html';
     }

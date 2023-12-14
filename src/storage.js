@@ -124,6 +124,8 @@ async function saveGame() {
     })
 }
 
+export { saveGame }
+
 // function setLoginButton(loginButton, logoutButton) {
 //   // let loginButton = document.getElementById('loginButton')
 //   // let logoutButton = document.getElementById('logoutButton')
