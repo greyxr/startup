@@ -91,6 +91,8 @@ async function getUsername() {
          }
   }
 
+export { getUsername }
+
 function getAuthenticated() {
   const auth = localStorage.getItem("authenticated")
   if (auth == null || auth == false) return false
@@ -99,10 +101,12 @@ function getAuthenticated() {
 
 export { getAuthenticated }
 
-async function loadUsername() {
-    let userNameSpan = document.getElementById('userNameSpan')
-    userNameSpan.innerText = await getUsername()
-}
+// async function loadUsername() {
+//     let userNameSpan = document.getElementById('userNameSpan')
+//     userNameSpan.innerText = await getUsername()
+// }
+
+// export { loadUsername }
 
 // addEventListener("load", (event) => {});
 // onload = (event) => onLoadFunctions();

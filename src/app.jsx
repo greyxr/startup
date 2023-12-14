@@ -8,7 +8,7 @@ import { Game } from './game/game';
 import { About } from './about/about';
 import { onLoadFunctions } from './storage.js'
 import { logout } from './storage.js'
-import { getAuthenticated } from './storage.js'
+import { getAuthenticated, getUsername } from './storage.js'
 
 
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
   let authenticated = getAuthenticated()
 
   const handleLoad = (event) => {
-    onLoadFunctions()
+    // onLoadFunctions()
     //authenticated = getAuthenticated()
     console.log("loaded")
   };
@@ -71,9 +71,13 @@ function MyNavbar({authenticated, onLogout}) {
   let navAuthenticated = getAuthenticated()
 
   React.useEffect(() => {
-    console.log(authenticated)
-    console.log(navAuthenticated)
     navAuthenticated = getAuthenticated()
+    async function loadUsername() {
+      let userNameSpan = document.getElementById('userNameSpan')
+      userNameSpan.innerText = await getUsername()
+  }
+    let userName = loadUsername()
+    console.log("Username: " + userName)
   })
 
   function handleLogout() {
