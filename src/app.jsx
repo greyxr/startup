@@ -84,6 +84,26 @@ function MyNavbar({authenticated, onLogout}) {
     onLogout()
   }
 
+  async function restartGame() {
+    console.log("In restart game")
+    let userName = document.getElementById('userNameSpan').innerText
+    let response = await fetch('/api/auth/restart?userName=' + userName, {
+      method: 'DELETE'
+    })
+    location.reload()
+  }
+  
+  async function handleSave() {
+    if(loggedIn) {
+      saveGame();
+      if(gameStarted) {
+        printToOutput('\nGame saved.', true)
+      }
+    } else {
+      window.location.href = 'login.html';
+    }
+  }
+
   return (
     <Navbar bg="dark" expand="lg" variant="dark" fixed="bottom">
       <Container>
@@ -106,11 +126,7 @@ function MyNavbar({authenticated, onLogout}) {
             <Nav.Link href="https://github.com/greyxr/startup">GitHub</Nav.Link>
             <Nav.Link onClick={() => handleSave()}>Save</Nav.Link>
             <Nav.Link onClick={() => {
-              if (gameStarted) {
-                restartGame();
-              } else {
-                console.log('No game found to restart');
-              }
+              restartGame()
             }}>Restart</Nav.Link>
             <Nav.Link id="userCount" disabled>
               currently logged in as <span id="userNameSpan"></span>

@@ -41,9 +41,17 @@ async function handleInput() {
     await callGPT(inputBox.value, outputHistory)
 }
 
+export { handleInput }
+
+// function toggleLoading() {
+//     let loading = document.getElementById('loading')
+//     loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+// }
+
 function toggleLoading() {
-    let loading = document.getElementById('loading')
-    loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+  //let loading = document.getElementById('loading')
+  //loading.style.color = (loading.style.display === 'none' ? loading.style.display = 'flex' : loading.style.display = 'none')
+  setLoading(!loading)
 }
 
 function printToOutput(outputText, displayOnly = false) {
